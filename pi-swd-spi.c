@@ -12,7 +12,9 @@
  */
 //  Based on https://raw.githubusercontent.com/raspberrypi/linux/rpi-3.10.y/Documentation/spi/spidev_test.c
 //  See https://www.raspberrypi.org/documentation/hardware/raspberrypi/spi/README.md
-//  Computed at https://docs.google.com/spreadsheets/d/12oXe1MTTEZVIbdmFXsOgOXVFHCQnYVvIw6fRpIQZybg/edit#gid=0
+//  SWD mapped to SPI bytes: https://docs.google.com/spreadsheets/d/12oXe1MTTEZVIbdmFXsOgOXVFHCQnYVvIw6fRpIQZybg/edit#gid=0
+//  Pi kernel driver: https://github.com/raspberrypi/linux/blob/rpi-3.12.y/drivers/spi/spi-bcm2708.c
+//  BCM2835 Peripherals Datasheet: https://www.raspberrypi.org/documentation/hardware/raspberrypi/bcm2835/BCM2835-ARM-Peripherals.pdf
 
 #include <stdint.h>
 #include <unistd.h>
@@ -25,6 +27,7 @@
 #include <linux/spi/spidev.h>
 
 //  From https://github.com/ntfreak/openocd/blob/master/src/jtag/swd.h
+//  Note: We must flip all bytes from LSB to MSB because LSB is not supported on Broadcom SPI.
 
 /**
  * SWD Line reset.
@@ -73,8 +76,11 @@ static void pabort(const char *s)
 }
 
 static const char *device = "/dev/spidev1.1";
-static uint8_t mode = 
-    SPI_LSB_FIRST  //  Bits are stored (and transmitted) LSB-first.
+static uint8_t mode = 0  //  Note: LSB mode is not supported on Broadcom. We must flip LSB to MSB ourselves.
+    //| SPI_CPOL   //  Clock polarity
+    //| SPI_CPHA   //  Clock phase
+    | SPI_NO_CS  //  1 device per bus, no Chip Select
+    | SPI_3WIRE  //  Bidirectional mode, data in and out pin shared
     ;
 static uint8_t bits = 8;
 static uint32_t speed = 122000;  //  Previously 500000
