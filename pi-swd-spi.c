@@ -12,6 +12,7 @@
  */
 //  Based on https://raw.githubusercontent.com/raspberrypi/linux/rpi-3.10.y/Documentation/spi/spidev_test.c
 //  See https://www.raspberrypi.org/documentation/hardware/raspberrypi/spi/README.md
+//  Computed at https://docs.google.com/spreadsheets/d/12oXe1MTTEZVIbdmFXsOgOXVFHCQnYVvIw6fRpIQZybg/edit#gid=0
 
 #include <stdint.h>
 #include <unistd.h>
@@ -23,6 +24,46 @@
 #include <linux/types.h>
 #include <linux/spi/spidev.h>
 
+//  From https://github.com/ntfreak/openocd/blob/master/src/jtag/swd.h
+
+/**
+ * SWD Line reset.
+ *
+ * SWD Line reset is at least 50 SWCLK cycles with SWDIO driven high,
+ * followed by at least two idle (low) cycle.
+ * Bits are stored (and transmitted) LSB-first.
+ */
+static const uint8_t swd_seq_line_reset[] = {
+	/* At least 50 SWCLK cycles with SWDIO high */
+	0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
+	/* At least 2 idle (low) cycles */
+	0x00,
+};
+static const unsigned swd_seq_line_reset_len = 64;
+
+/**
+ * JTAG-to-SWD sequence.
+ *
+ * The JTAG-to-SWD sequence is at least 50 TCK/SWCLK cycles with TMS/SWDIO
+ * high, putting either interface logic into reset state, followed by a
+ * specific 16-bit sequence and finally a line reset in case the SWJ-DP was
+ * already in SWD mode.
+ * Bits are stored (and transmitted) LSB-first.
+ */
+static const uint8_t swd_seq_jtag_to_swd[] = {
+	/* At least 50 TCK/SWCLK cycles with TMS/SWDIO high */
+	0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
+	/* Switching sequence from JTAG to SWD */
+	0x9e, 0xe7,
+	/* At least 50 TCK/SWCLK cycles with TMS/SWDIO high */
+	0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
+	/* At least 2 idle (low) cycles */
+	0x00,
+};
+static const unsigned swd_seq_jtag_to_swd_len = 136;
+
+//  End of https://github.com/ntfreak/openocd/blob/master/src/jtag/swd.h
+
 #define ARRAY_SIZE(a) (sizeof(a) / sizeof((a)[0]))
 
 static void pabort(const char *s)
@@ -32,10 +73,12 @@ static void pabort(const char *s)
 }
 
 static const char *device = "/dev/spidev1.1";
-static uint8_t mode;
+static uint8_t mode = 
+    SPI_LSB_FIRST  //  Bits are stored (and transmitted) LSB-first.
+    ;
 static uint8_t bits = 8;
-static uint32_t speed = 500000;
-static uint16_t delay;
+static uint32_t speed = 122000;  //  Previously 500000
+static uint16_t delay = 0;
 
 static void transfer(int fd)
 {
