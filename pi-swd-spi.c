@@ -67,9 +67,13 @@ static const unsigned swd_seq_jtag_to_swd_len = 136;  //  Number of bits
 
 //  End of https://github.com/ntfreak/openocd/blob/master/src/jtag/swd.h
 
-//  Read register 0 (IDCODE)
+//  SWD Sequence to Read Register 0 (IDCODE), with 2 trailing undefined bits short of 6 bytes. Causes target to get out of sync after sequence.
 static const uint8_t swd_read_reg_0[] = { 0xa5 };
 static const unsigned swd_read_reg_0_len = 8;  //  Number of bits
+
+//  SWD Sequence to Read Register 0 (IDCODE), prepadded with 2 null bits bits to fill up 6 bytes. Target will not get out of sync after sequence.
+static const uint8_t swd_read_reg_0_prepadded[] = { 0x94, 0x02, 0x00, 0x00, 0x00, 0x00 };
+static const unsigned swd_read_reg_0_prepadded_len = 48;  //  Number of bits
 
 //  SPI Configuration
 static const char *device = "/dev/spidev0.0";  //  SPI device name. If missing, enable SPI in raspi-config.
@@ -184,8 +188,12 @@ static void spi_transfer(int fd) {
         puts("Transmit JTAG-to-SWD sequence...");
         spi_transmit(fd, swd_seq_jtag_to_swd, swd_seq_jtag_to_swd_len / 8);
 
+        //  Transmit command to read Register 0 (IDCODE).  This is mandatory after JTAG-to-SWD sequence, according to SWD protocol.  We prepad with 2 null bits so that the next command will be byte-aligned.
+        puts("\nTransmit prepadded command to read Register 0 (IDCODE)...");
+        spi_transmit(fd, swd_read_reg_0_prepadded, swd_read_reg_0_prepadded_len / 8);
+
         //  Transmit command to read Register 0 (IDCODE).
-        puts("\nTransmit command to read Register 0 (IDCODE)...");
+        puts("\nTransmit unpadded command to read Register 0 (IDCODE)...");
         spi_transmit(fd, swd_read_reg_0, swd_read_reg_0_len / 8);
 
         //  Read response (38 bits)
