@@ -24,8 +24,8 @@
 //  Compile with: gcc -o pi-swd-pi pi-swd-spi.c
 
 //  To test:
-//  Connect SWDIO to MOSI (Pin P1-19)
-//  Connect SWDCLK to SCLK (Pin P1-23)
+//  Connect SWDIO to MOSI (Pin P1-19, Yellow)
+//  Connect SWDCLK to SCLK (Pin P1-23, Blue)
 //  Connect 3.3V and GND
 //  sudo raspi-config
 //  Interfacing Options --> SPI --> Yes
@@ -63,21 +63,22 @@ static const uint8_t swd_seq_jtag_to_swd[] = {
 	/* At least 2 idle (low) cycles */
 	0x00,
 };
-static const unsigned swd_seq_jtag_to_swd_len = 136;
+static const unsigned swd_seq_jtag_to_swd_len = 136;  //  Number of bits
 
 //  End of https://github.com/ntfreak/openocd/blob/master/src/jtag/swd.h
 
 //  Read register 0 (IDCODE)
 static const uint8_t swd_read_reg_0[] = { 0xa5 };
-static const unsigned swd_read_reg_0_len = 1;
+static const unsigned swd_read_reg_0_len = 8;  //  Number of bits
 
-static const char *device = "/dev/spidev1.1";
+//  SPI Configuration
+static const char *device = "/dev/spidev0.0";  //  SPI device name. If missing, enable SPI in raspi-config.
 static uint8_t mode = 0  //  Note: LSB mode is not supported on Broadcom. We must flip LSB to MSB ourselves.
     | SPI_NO_CS  //  1 device per bus, no Chip Select
     | SPI_3WIRE  //  Bidirectional mode, data in and out pin shared
     ;            //  Data is valid on first rising edge of the clock, so CPOL=0 and CPHA=0
 static uint8_t bits = 8;         //  8 bits per word
-static uint32_t speed = 122000;  //  122 kHz. Previously 500000
+static uint32_t speed = 1953000;  //  1,953 kHz. Previously 500000
 static uint16_t delay = 0;       //  SPI driver latency: https://www.raspberrypi.org/forums/viewtopic.php?f=44&t=19489
 
 #define ARRAY_SIZE(a) (sizeof(a) / sizeof((a)[0]))
@@ -116,19 +117,19 @@ static uint8_t reverse_buf[MAX_SPI_SIZE];
 
 /// Transmit len bytes of buf (assumed to be in LSB format) to the SPI device in MSB format
 static void spi_transmit(int fd, const uint8_t *buf, unsigned int len) {
-    {
-        printf("spi_transmit: len=%d\n", len);
-        for (unsigned int i = 0; i < len; i++) {
-            if (!(i % 6)) { puts(""); }
-            printf("%.2X ", reverse_buf[i]);
-        }
-        puts("");
-    }
     //  Reverse LSB to MSB for entire buf into reversed buffer.
     if (len >= MAX_SPI_SIZE) { printf("len=%d ", len); pabort("spi_transmit overflow"); return; }
     for (unsigned int i = 0; i < len; i++) {
         uint8_t b = buf[i];
         reverse_buf[i] = reverse_byte[(uint8_t) b];
+    }
+    {
+        printf("spi_transmit: len=%d\n", len);
+        for (unsigned int i = 0; i < len; i++) {
+            if (i > 0 && i % 8 == 0) { puts(""); }
+            printf("%.2X ", reverse_buf[i]);
+        }
+        puts("");
     }
     //  Transmit the reversed buffer to SPI device.
 	struct spi_ioc_transfer tr = {
@@ -167,7 +168,7 @@ static void spi_receive(int fd, uint8_t *buf, unsigned int len) {
     }
     {
         for (unsigned int i = 0; i < len; i++) {
-            if (!(i % 6)) { puts(""); }
+            if (i > 0 && i % 8 == 0) { puts(""); }
             printf("%.2X ", buf[i]);
         }
         puts("");
@@ -176,22 +177,23 @@ static void spi_receive(int fd, uint8_t *buf, unsigned int len) {
 
 /// Transmit and receive dat to SPI device
 static void spi_transfer(int fd) {
-    //  Transmit JTAG-to-SWD sequence.
-    spi_transmit(fd, swd_seq_jtag_to_swd, swd_seq_jtag_to_swd_len);
+    for (int i = 0; i <= 1; i++) {  //  Test twice
+        printf("\n---- Test #%d\n\n", i + 1);
 
-    //  Transmit command to read register 0 (IDCODE).
-    spi_transmit(fd, swd_read_reg_0, swd_read_reg_0_len);
+        //  Transmit JTAG-to-SWD sequence.
+        puts("Transmit JTAG-to-SWD sequence...");
+        spi_transmit(fd, swd_seq_jtag_to_swd, swd_seq_jtag_to_swd_len / 8);
 
-    //  Read response (38 bits)
-    const int buf_size = 5;
-    uint8_t buf[buf_size];
-    spi_receive(fd, buf, buf_size);
+        //  Transmit command to read Register 0 (IDCODE).
+        puts("\nTransmit command to read Register 0 (IDCODE)...");
+        spi_transmit(fd, swd_read_reg_0, swd_read_reg_0_len / 8);
 
-    //  Transmit command to read register 0 (IDCODE).
-    spi_transmit(fd, swd_read_reg_0, swd_read_reg_0_len);
-
-    //  Read response (38 bits)
-    spi_receive(fd, buf, buf_size);
+        //  Read response (38 bits)
+        const int buf_size = 5;
+        uint8_t buf[buf_size];
+        puts("\nReceive value of Register 0 (IDCODE)...");
+        spi_receive(fd, buf, buf_size);
+    }
 }
 
 int main(int argc, char *argv[]) {
