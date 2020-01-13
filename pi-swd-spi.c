@@ -67,7 +67,7 @@ static const unsigned swd_seq_jtag_to_swd_len = 136;  //  Number of bits
 
 //  End of https://github.com/ntfreak/openocd/blob/master/src/jtag/swd.h
 
-//  SWD Sequence to Read Register 0 (IDCODE), with 2 trailing undefined bits short of 6 bytes. Causes target to get out of sync after sequence.
+//  SWD Sequence to Read Register 0 (IDCODE), with 2 trailing undefined bits short of 6 bytes. Target goes out of sync after sequence.
 static const uint8_t swd_read_reg_0[] = { 0xa5 };
 static const unsigned swd_read_reg_0_len = 8;  //  Number of bits
 
@@ -246,43 +246,53 @@ static void pabort(const char *s) {
 }
 
 #ifdef NOTUSED
-    Expected output:
+Expected output:
 
-    spi mode: 80
-    bits per word: 8
-    max speed: 1953000 Hz (1953 KHz)
+pi@raspberrypi:~/pi-swd-spi $ gcc -o pi-swd-spi pi-swd-spi.c
+pi@raspberrypi:~/pi-swd-spi $ ./pi-swd-spi 
+spi mode: 80
+bits per word: 8
+max speed: 1953000 Hz (1953 KHz)
 
-    ---- Test #1
+---- Test #1
 
-    Transmit JTAG-to-SWD sequence...
-    spi_transmit: len=17
-    FF FF FF FF FF FF FF 79 
-    E7 FF FF FF FF FF FF FF 
-    00 
+Transmit JTAG-to-SWD sequence...
+spi_transmit: len=17
+FF FF FF FF FF FF FF 79 
+E7 FF FF FF FF FF FF FF 
+00 
 
-    Transmit command to read Register 0 (IDCODE)...
-    spi_transmit: len=1
-    A5 
+Transmit prepadded command to read Register 0 (IDCODE)...
+spi_transmit: len=6
+29 40 00 00 00 00 
 
-    Receive value of Register 0 (IDCODE)...
-    spi_receive: len=5
-    73 47 01 BA E2 
+Transmit unpadded command to read Register 0 (IDCODE)...
+spi_transmit: len=1
+A5 
 
-    ---- Test #2
+Receive value of Register 0 (IDCODE)...
+spi_receive: len=5
+73 47 01 BA E2 
 
-    Transmit JTAG-to-SWD sequence...
-    spi_transmit: len=17
-    FF FF FF FF FF FF FF 79 
-    E7 FF FF FF FF FF FF FF 
-    00 
+---- Test #2
 
-    Transmit command to read Register 0 (IDCODE)...
-    spi_transmit: len=1
-    A5 
+Transmit JTAG-to-SWD sequence...
+spi_transmit: len=17
+FF FF FF FF FF FF FF 79 
+E7 FF FF FF FF FF FF FF 
+00 
 
-    Receive value of Register 0 (IDCODE)...
-    spi_receive: len=5
-    73 47 01 BA E2 
+Transmit prepadded command to read Register 0 (IDCODE)...
+spi_transmit: len=6
+29 40 00 00 00 00 
+
+Transmit unpadded command to read Register 0 (IDCODE)...
+spi_transmit: len=1
+A5 
+
+Receive value of Register 0 (IDCODE)...
+spi_receive: len=5
+73 47 01 BA E2 
 
     static void transfer(int fd) {
         int ret;
