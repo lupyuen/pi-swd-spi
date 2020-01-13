@@ -175,12 +175,12 @@ static void spi_receive(int fd, uint8_t *buf, unsigned int len) {
     }
 }
 
-/// Transmit and receive dat to SPI device
+/// Transmit and receive data to/from SPI device
 static void spi_transfer(int fd) {
     for (int i = 0; i <= 1; i++) {  //  Test twice
         printf("\n---- Test #%d\n\n", i + 1);
 
-        //  Transmit JTAG-to-SWD sequence.
+        //  Transmit JTAG-to-SWD sequence. Need to transmit every time because the SWD read/write command has extra 2 undefined bits that will confuse the target.
         puts("Transmit JTAG-to-SWD sequence...");
         spi_transmit(fd, swd_seq_jtag_to_swd, swd_seq_jtag_to_swd_len / 8);
 
@@ -238,6 +238,44 @@ static void pabort(const char *s) {
 }
 
 #ifdef NOTUSED
+    Expected output:
+
+    spi mode: 80
+    bits per word: 8
+    max speed: 1953000 Hz (1953 KHz)
+
+    ---- Test #1
+
+    Transmit JTAG-to-SWD sequence...
+    spi_transmit: len=17
+    FF FF FF FF FF FF FF 79 
+    E7 FF FF FF FF FF FF FF 
+    00 
+
+    Transmit command to read Register 0 (IDCODE)...
+    spi_transmit: len=1
+    A5 
+
+    Receive value of Register 0 (IDCODE)...
+    spi_receive: len=5
+    73 47 01 BA E2 
+
+    ---- Test #2
+
+    Transmit JTAG-to-SWD sequence...
+    spi_transmit: len=17
+    FF FF FF FF FF FF FF 79 
+    E7 FF FF FF FF FF FF FF 
+    00 
+
+    Transmit command to read Register 0 (IDCODE)...
+    spi_transmit: len=1
+    A5 
+
+    Receive value of Register 0 (IDCODE)...
+    spi_receive: len=5
+    73 47 01 BA E2 
+
     static void transfer(int fd) {
         int ret;
         uint8_t tx[] = {
