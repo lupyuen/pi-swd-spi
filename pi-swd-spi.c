@@ -10,6 +10,10 @@
  *
  * Cross-compile with cross-gcc -I/path/to/cross-kernel/include
  */
+//  Testing feasibility of SWD protocol implemented with Raspberry Pi Bidirectional SPI
+//  Why implement SWD over Bidirectional SPI on Raspberry Pi?  Because SWD over Bit-Banging GPIO has timing issues that affect OpenOCD flashing...
+//  https://gist.github.com/lupyuen/18e66c3e81e11050a10d1192c5b84bb0
+
 //  Based on https://raw.githubusercontent.com/raspberrypi/linux/rpi-3.10.y/Documentation/spi/spidev_test.c
 //  SWD Protocol: https://annals-csis.org/proceedings/2012/pliks/279.pdf
 //  See also: https://github.com/MarkDing/swd_programing_sram
