@@ -7,5 +7,15 @@
 			"path": "/Users/Luppy/PineTime/openocd-spi"
 		}
 	],
-	"settings": {}
+	"settings": {
+		"files.associations": {
+			"limits": "cpp",
+			"*.tcc": "c",
+			"deque": "c",
+			"string": "c",
+			"unordered_map": "c",
+			"vector": "c",
+			"system_error": "c"
+		}
+	}
 }
