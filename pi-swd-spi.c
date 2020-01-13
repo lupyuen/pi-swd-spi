@@ -21,7 +21,7 @@
 //  Pi SPI Kernel Driver: https://github.com/raspberrypi/linux/blob/rpi-3.12.y/drivers/spi/spi-bcm2708.c
 //  BCM2835 Peripherals Datasheet: https://www.raspberrypi.org/documentation/hardware/raspberrypi/bcm2835/BCM2835-ARM-Peripherals.pdf
 //  SWD mapped to SPI bytes: https://docs.google.com/spreadsheets/d/12oXe1MTTEZVIbdmFXsOgOXVFHCQnYVvIw6fRpIQZybg/edit#gid=0
-//  Compile with: gcc -o pi-swd-pi pi-swd-spi.c
+//  Compile with: gcc -o pi-swd-spi pi-swd-spi.c
 
 //  To test:
 //  Connect SWDIO to MOSI (Pin P1-19, Yellow)
