@@ -23,6 +23,14 @@
 //  SWD mapped to SPI bytes: https://docs.google.com/spreadsheets/d/12oXe1MTTEZVIbdmFXsOgOXVFHCQnYVvIw6fRpIQZybg/edit#gid=0
 //  Compile with: gcc -o pi-swd-pi pi-swd-spi.c
 
+//  To test:
+//  Connect SWDIO to MOSI (Pin P1-19)
+//  Connect SWDCLK to SCLK (Pin P1-23)
+//  Connect 3.3V and GND
+//  sudo raspi-config
+//  Interfacing Options --> SPI --> Yes
+//  Finish --> Yes
+
 #include <stdint.h>
 #include <unistd.h>
 #include <stdio.h>
