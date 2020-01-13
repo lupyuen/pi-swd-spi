@@ -21,6 +21,7 @@
 //  Pi SPI Kernel Driver: https://github.com/raspberrypi/linux/blob/rpi-3.12.y/drivers/spi/spi-bcm2708.c
 //  BCM2835 Peripherals Datasheet: https://www.raspberrypi.org/documentation/hardware/raspberrypi/bcm2835/BCM2835-ARM-Peripherals.pdf
 //  SWD mapped to SPI bytes: https://docs.google.com/spreadsheets/d/12oXe1MTTEZVIbdmFXsOgOXVFHCQnYVvIw6fRpIQZybg/edit#gid=0
+//  Compile with: gcc -o pi-swd-pi pi-swd-spi.c
 
 #include <stdint.h>
 #include <unistd.h>
@@ -99,14 +100,14 @@ static const uint8_t reverse_byte[] = {
 static uint8_t reverse_buf[MAX_SPI_SIZE];
 
 /* From https://www.raspberrypi.org/documentation/hardware/raspberrypi/spi/README.md:
-Bidirectional or "3-wire" mode is supported by the spi-bcm2835 kernel module. 
-Please note that in this mode, either the tx or rx field of the spi_transfer 
-struct must be a NULL pointer, since only half-duplex communication is possible. 
-Otherwise, the transfer will fail. The spidev_test.c source code does not consider 
-this correctly, and therefore does not work at all in 3-wire mode. */
+    Bidirectional or "3-wire" mode is supported by the spi-bcm2835 kernel module. 
+    Please note that in this mode, either the tx or rx field of the spi_transfer 
+    struct must be a NULL pointer, since only half-duplex communication is possible. 
+    Otherwise, the transfer will fail. The spidev_test.c source code does not consider 
+    this correctly, and therefore does not work at all in 3-wire mode. */
 
 /// Transmit len bytes of buf (assumed to be in LSB format) to the SPI device in MSB format
-static void spi_transmit(int fd, uint8_t *buf, unsigned int len) {
+static void spi_transmit(int fd, const uint8_t *buf, unsigned int len) {
     {
         printf("spi_transmit: len=%d\n", len);
         for (unsigned int i = 0; i < len; i++) {
@@ -124,7 +125,7 @@ static void spi_transmit(int fd, uint8_t *buf, unsigned int len) {
     //  Transmit the reversed buffer to SPI device.
 	struct spi_ioc_transfer tr = {
 		.tx_buf = (unsigned long) reverse_buf,
-		.rx_buf = NULL,
+		.rx_buf = (unsigned long) NULL,
 		.len = len,
 		.delay_usecs = delay,
 		.speed_hz = speed,
@@ -141,7 +142,7 @@ static void spi_receive(int fd, uint8_t *buf, unsigned int len) {
     printf("spi_receive: len=%d\n", len);
     if (len >= MAX_SPI_SIZE) { printf("len=%d ", len); pabort("spi_receive overflow"); return; }
 	struct spi_ioc_transfer tr = {
-		.tx_buf = NULL,
+		.tx_buf = (unsigned long) NULL,
 		.rx_buf = (unsigned long) reverse_buf,
 		.len = len,
 		.delay_usecs = delay,
@@ -175,7 +176,13 @@ static void spi_transfer(int fd) {
 
     //  Read response (38 bits)
     const int buf_size = 5;
-    uint8_t buf[5]
+    uint8_t buf[buf_size];
+    spi_receive(fd, buf, buf_size);
+
+    //  Transmit command to read register 0 (IDCODE).
+    spi_transmit(fd, swd_read_reg_0, swd_read_reg_0_len);
+
+    //  Read response (38 bits)
     spi_receive(fd, buf, buf_size);
 }
 
