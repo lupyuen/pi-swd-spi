@@ -1,0 +1,806 @@
++ sudo /home/pi/openocd/src/openocd -d4 -s /home/pi/openocd/tcl -f scripts/nrf52-pi/swd-pi.ocd -f scripts/nrf52-pi/flash-unprotect.ocd
+Open On-Chip Debugger 0.10.0+dev-01000-gdb23c13d (2020-01-11-15:50)
+Licensed under GNU GPL v2
+For bug reports, read
+	http://openocd.org/doc/doxygen/bugs.html
+User : 13 7 options.c:63 configuration_output_handler(): debug_level: 4
+User : 14 7 options.c:63 configuration_output_handler(): 
+Debug: 15 7 configuration.c:42 add_script_search_dir(): adding /home/pi/openocd/tcl
+Debug: 16 7 options.c:187 add_default_dirs(): bindir=/usr/local/bin
+Debug: 17 7 options.c:188 add_default_dirs(): pkgdatadir=/usr/local/share/openocd
+Debug: 18 7 options.c:189 add_default_dirs(): exepath=/home/pi/openocd/src
+Debug: 19 7 options.c:190 add_default_dirs(): bin2data=../share/openocd
+Debug: 20 7 configuration.c:42 add_script_search_dir(): adding /root/.openocd
+Debug: 21 7 configuration.c:42 add_script_search_dir(): adding /home/pi/openocd/src/../share/openocd/site
+Debug: 22 7 configuration.c:42 add_script_search_dir(): adding /home/pi/openocd/src/../share/openocd/scripts
+Debug: 23 7 configuration.c:97 find_file(): found scripts/nrf52-pi/swd-pi.ocd
+Debug: 24 8 command.c:143 script_debug(): command - interface interface bcm2835gpio
+Debug: 26 8 command.c:354 register_command_handler(): registering 'bcm2835gpio_jtag_nums'...
+Debug: 27 8 command.c:354 register_command_handler(): registering 'bcm2835gpio_tck_num'...
+Debug: 28 8 command.c:354 register_command_handler(): registering 'bcm2835gpio_tms_num'...
+Debug: 29 8 command.c:354 register_command_handler(): registering 'bcm2835gpio_tdo_num'...
+Debug: 30 8 command.c:354 register_command_handler(): registering 'bcm2835gpio_tdi_num'...
+Debug: 31 8 command.c:354 register_command_handler(): registering 'bcm2835gpio_swd_nums'...
+Debug: 32 8 command.c:354 register_command_handler(): registering 'bcm2835gpio_swclk_num'...
+Debug: 33 8 command.c:354 register_command_handler(): registering 'bcm2835gpio_swdio_num'...
+Debug: 34 8 command.c:354 register_command_handler(): registering 'bcm2835gpio_srst_num'...
+Debug: 35 8 command.c:354 register_command_handler(): registering 'bcm2835gpio_trst_num'...
+Debug: 36 8 command.c:354 register_command_handler(): registering 'bcm2835gpio_speed_coeffs'...
+Debug: 37 8 command.c:354 register_command_handler(): registering 'bcm2835gpio_peripheral_base'...
+Debug: 38 8 command.c:143 script_debug(): command - bcm2835gpio_peripheral_base bcm2835gpio_peripheral_base 0xFE000000
+Debug: 40 8 command.c:143 script_debug(): command - bcm2835gpio_speed_coeffs bcm2835gpio_speed_coeffs 236181 60
+Debug: 42 8 command.c:143 script_debug(): command - bcm2835gpio_swd_nums bcm2835gpio_swd_nums 20 21
+Debug: 44 8 command.c:143 script_debug(): command - bcm2835gpio_srst_num bcm2835gpio_srst_num 18
+Debug: 46 8 command.c:143 script_debug(): command - transport transport select swd
+Debug: 47 8 command.c:354 register_command_handler(): registering 'swd'...
+Debug: 48 8 bitbang.c:402 bitbang_swd_init(): bitbang_swd_init
+Debug: 49 9 configuration.c:97 find_file(): found /home/pi/openocd/tcl/target/nrf52.cfg
+Debug: 50 9 configuration.c:97 find_file(): found /home/pi/openocd/tcl/target/swj-dp.tcl
+Debug: 51 9 command.c:143 script_debug(): command - transport transport select
+Debug: 52 9 command.c:143 script_debug(): command - transport transport select
+Debug: 53 9 command.c:143 script_debug(): command - transport transport select
+Debug: 54 9 command.c:143 script_debug(): command - transport transport select
+Debug: 55 10 command.c:143 script_debug(): command - swd swd newdap nrf52 cpu -expected-id 0x2ba01477
+Debug: 56 10 tcl.c:567 jim_newtap_cmd(): Creating New Tap, Chip: nrf52, Tap: cpu, Dotted: nrf52.cpu, 2 params
+Debug: 57 10 core.c:1375 jtag_tap_init(): Created Tap: nrf52.cpu @ abs position 0, irlen 0, capture: 0x0 mask: 0x0
+Debug: 58 10 command.c:143 script_debug(): command - dap dap create nrf52.dap -chain-position nrf52.cpu
+Debug: 59 10 command.c:354 register_command_handler(): registering 'nrf52.dap'...
+Debug: 60 10 command.c:354 register_command_handler(): registering 'nrf52.dap'...
+Debug: 61 10 command.c:354 register_command_handler(): registering 'nrf52.dap'...
+Debug: 62 10 command.c:354 register_command_handler(): registering 'nrf52.dap'...
+Debug: 63 10 command.c:354 register_command_handler(): registering 'nrf52.dap'...
+Debug: 64 10 command.c:354 register_command_handler(): registering 'nrf52.dap'...
+Debug: 65 10 command.c:354 register_command_handler(): registering 'nrf52.dap'...
+Debug: 66 10 command.c:354 register_command_handler(): registering 'nrf52.dap'...
+Debug: 67 10 command.c:354 register_command_handler(): registering 'nrf52.dap'...
+Debug: 68 10 command.c:143 script_debug(): command - target target create nrf52.cpu cortex_m -dap nrf52.dap
+Debug: 69 11 command.c:354 register_command_handler(): registering 'arm'...
+Debug: 70 11 command.c:354 register_command_handler(): registering 'arm'...
+Debug: 71 11 command.c:354 register_command_handler(): registering 'arm'...
+Debug: 72 11 command.c:354 register_command_handler(): registering 'arm'...
+Debug: 73 11 command.c:354 register_command_handler(): registering 'arm'...
+Debug: 74 11 command.c:354 register_command_handler(): registering 'arm'...
+Debug: 75 11 command.c:354 register_command_handler(): registering 'arm'...
+Debug: 76 11 command.c:354 register_command_handler(): registering 'arm'...
+Debug: 77 11 command.c:354 register_command_handler(): registering 'arm'...
+Debug: 78 11 command.c:354 register_command_handler(): registering 'tpiu'...
+Debug: 79 11 command.c:354 register_command_handler(): registering 'itm'...
+Debug: 80 11 command.c:354 register_command_handler(): registering 'itm'...
+Debug: 81 11 command.c:354 register_command_handler(): registering 'cortex_m'...
+Debug: 82 11 command.c:354 register_command_handler(): registering 'cortex_m'...
+Debug: 83 11 command.c:354 register_command_handler(): registering 'cortex_m'...
+Debug: 84 11 command.c:354 register_command_handler(): registering 'nrf52.cpu'...
+Debug: 85 11 command.c:354 register_command_handler(): registering 'nrf52.cpu'...
+Debug: 86 11 command.c:354 register_command_handler(): registering 'nrf52.cpu'...
+Debug: 87 11 command.c:354 register_command_handler(): registering 'nrf52.cpu'...
+Debug: 88 11 command.c:354 register_command_handler(): registering 'nrf52.cpu'...
+Debug: 89 11 command.c:354 register_command_handler(): registering 'nrf52.cpu'...
+Debug: 90 11 command.c:354 register_command_handler(): registering 'nrf52.cpu'...
+Debug: 91 11 command.c:354 register_command_handler(): registering 'nrf52.cpu'...
+Debug: 92 11 command.c:354 register_command_handler(): registering 'nrf52.cpu'...
+Debug: 93 11 command.c:354 register_command_handler(): registering 'nrf52.cpu'...
+Debug: 94 11 command.c:354 register_command_handler(): registering 'nrf52.cpu'...
+Debug: 95 11 command.c:354 register_command_handler(): registering 'nrf52.cpu'...
+Debug: 96 12 command.c:354 register_command_handler(): registering 'nrf52.cpu'...
+Debug: 97 12 command.c:354 register_command_handler(): registering 'nrf52.cpu'...
+Debug: 98 12 command.c:354 register_command_handler(): registering 'nrf52.cpu'...
+Debug: 99 12 command.c:354 register_command_handler(): registering 'nrf52.cpu'...
+Debug: 100 12 command.c:354 register_command_handler(): registering 'nrf52.cpu'...
+Debug: 101 12 command.c:354 register_command_handler(): registering 'nrf52.cpu'...
+Debug: 102 12 command.c:354 register_command_handler(): registering 'nrf52.cpu'...
+Debug: 103 12 command.c:354 register_command_handler(): registering 'nrf52.cpu'...
+Debug: 104 12 command.c:354 register_command_handler(): registering 'nrf52.cpu'...
+Debug: 105 12 command.c:354 register_command_handler(): registering 'nrf52.cpu'...
+Debug: 106 12 command.c:354 register_command_handler(): registering 'nrf52.cpu'...
+Debug: 107 12 command.c:354 register_command_handler(): registering 'nrf52.cpu'...
+Debug: 108 12 command.c:354 register_command_handler(): registering 'nrf52.cpu'...
+Debug: 109 12 command.c:354 register_command_handler(): registering 'nrf52.cpu'...
+Debug: 110 12 command.c:354 register_command_handler(): registering 'nrf52.cpu'...
+Debug: 111 12 command.c:354 register_command_handler(): registering 'nrf52.cpu'...
+Debug: 112 12 command.c:354 register_command_handler(): registering 'nrf52.cpu'...
+Debug: 113 12 command.c:354 register_command_handler(): registering 'nrf52.cpu'...
+Debug: 114 12 command.c:354 register_command_handler(): registering 'nrf52.cpu'...
+Debug: 115 12 command.c:354 register_command_handler(): registering 'nrf52.cpu'...
+Debug: 116 12 command.c:354 register_command_handler(): registering 'nrf52.cpu'...
+Debug: 117 12 command.c:354 register_command_handler(): registering 'nrf52.cpu'...
+Debug: 118 12 command.c:354 register_command_handler(): registering 'nrf52.cpu'...
+Debug: 119 12 command.c:354 register_command_handler(): registering 'nrf52.cpu'...
+Debug: 120 12 command.c:354 register_command_handler(): registering 'nrf52.cpu'...
+Debug: 121 12 command.c:354 register_command_handler(): registering 'nrf52.cpu'...
+Debug: 122 12 command.c:354 register_command_handler(): registering 'nrf52.cpu'...
+Debug: 123 12 command.c:354 register_command_handler(): registering 'nrf52.cpu'...
+Debug: 124 12 command.c:354 register_command_handler(): registering 'nrf52.cpu'...
+Debug: 125 12 command.c:354 register_command_handler(): registering 'nrf52.cpu'...
+Debug: 126 13 command.c:143 script_debug(): command - adapter_khz adapter_khz 1000
+Debug: 128 13 core.c:1707 jtag_config_khz(): handle jtag khz
+Debug: 129 13 core.c:1670 adapter_khz_to_speed(): convert khz to interface specific speed value
+Debug: 130 13 core.c:1670 adapter_khz_to_speed(): convert khz to interface specific speed value
+Debug: 131 13 command.c:143 script_debug(): command - nrf52.cpu nrf52.cpu configure -work-area-phys 0x20000000 -work-area-size 0x4000 -work-area-backup 0
+Debug: 132 13 target.c:1961 target_free_all_working_areas_restore(): freeing all working areas
+Debug: 133 13 target.c:1961 target_free_all_working_areas_restore(): freeing all working areas
+Debug: 134 13 target.c:1961 target_free_all_working_areas_restore(): freeing all working areas
+Debug: 135 13 command.c:143 script_debug(): command - transport transport select
+Debug: 136 13 command.c:143 script_debug(): command - cortex_m cortex_m reset_config sysresetreq
+Debug: 138 13 command.c:143 script_debug(): command - flash flash bank nrf52.flash nrf5 0x00000000 0 1 1 nrf52.cpu
+Debug: 140 13 command.c:354 register_command_handler(): registering 'nrf5'...
+Debug: 141 13 command.c:354 register_command_handler(): registering 'nrf5'...
+Debug: 142 13 command.c:354 register_command_handler(): registering 'nrf51'...
+Debug: 143 13 command.c:354 register_command_handler(): registering 'nrf51'...
+Debug: 144 13 tcl.c:1156 handle_flash_bank_command(): 'nrf5' driver usage field missing
+Debug: 145 13 command.c:143 script_debug(): command - flash flash bank nrf52.uicr nrf5 0x10001000 0 1 1 nrf52.cpu
+Debug: 147 13 command.c:376 register_command(): command 'nrf5' is already registered in '<global>' context
+Debug: 148 13 command.c:376 register_command(): command 'mass_erase' is already registered in 'nrf5' context
+Debug: 149 13 command.c:376 register_command(): command 'info' is already registered in 'nrf5' context
+Debug: 150 13 command.c:376 register_command(): command 'nrf51' is already registered in '<global>' context
+Debug: 151 13 command.c:376 register_command(): command 'mass_erase' is already registered in 'nrf51' context
+Debug: 152 13 command.c:376 register_command(): command 'info' is already registered in 'nrf51' context
+Debug: 153 13 tcl.c:1156 handle_flash_bank_command(): 'nrf5' driver usage field missing
+Debug: 154 14 configuration.c:97 find_file(): found scripts/nrf52-pi/flash-unprotect.ocd
+Debug: 155 14 command.c:143 script_debug(): command - gdb_flash_program gdb_flash_program enable
+Debug: 157 14 command.c:143 script_debug(): command - gdb_breakpoint_override gdb_breakpoint_override hard
+User : 159 14 gdb_server.c:3669 handle_gdb_breakpoint_override_command(): force hard breakpoints
+Debug: 160 14 command.c:143 script_debug(): command - init init
+Debug: 162 14 command.c:143 script_debug(): command - target target init
+Debug: 164 14 command.c:143 script_debug(): command - target target names
+Debug: 165 14 command.c:143 script_debug(): command - nrf52.cpu nrf52.cpu cget -event gdb-flash-erase-start
+Debug: 166 14 command.c:143 script_debug(): command - nrf52.cpu nrf52.cpu configure -event gdb-flash-erase-start reset init
+Debug: 167 14 command.c:143 script_debug(): command - nrf52.cpu nrf52.cpu cget -event gdb-flash-write-end
+Debug: 168 15 command.c:143 script_debug(): command - nrf52.cpu nrf52.cpu configure -event gdb-flash-write-end reset halt
+Debug: 169 15 command.c:143 script_debug(): command - nrf52.cpu nrf52.cpu cget -event gdb-attach
+Debug: 170 15 command.c:143 script_debug(): command - nrf52.cpu nrf52.cpu configure -event gdb-attach halt
+Debug: 171 15 target.c:1423 handle_target_init_command(): Initializing targets...
+Debug: 172 15 semihosting_common.c:97 semihosting_common_init():  
+Debug: 173 15 command.c:354 register_command_handler(): registering 'target_request'...
+Debug: 174 15 command.c:354 register_command_handler(): registering 'trace'...
+Debug: 175 15 command.c:354 register_command_handler(): registering 'trace'...
+Debug: 176 15 command.c:354 register_command_handler(): registering 'fast_load_image'...
+Debug: 177 15 command.c:354 register_command_handler(): registering 'fast_load'...
+Debug: 178 15 command.c:354 register_command_handler(): registering 'profile'...
+Debug: 179 15 command.c:354 register_command_handler(): registering 'virt2phys'...
+Debug: 180 15 command.c:354 register_command_handler(): registering 'reg'...
+Debug: 181 15 command.c:354 register_command_handler(): registering 'poll'...
+Debug: 182 15 command.c:354 register_command_handler(): registering 'wait_halt'...
+Debug: 183 15 command.c:354 register_command_handler(): registering 'halt'...
+Debug: 184 15 command.c:354 register_command_handler(): registering 'resume'...
+Debug: 185 15 command.c:354 register_command_handler(): registering 'reset'...
+Debug: 186 15 command.c:354 register_command_handler(): registering 'soft_reset_halt'...
+Debug: 187 15 command.c:354 register_command_handler(): registering 'step'...
+Debug: 188 15 command.c:354 register_command_handler(): registering 'mdd'...
+Debug: 189 15 command.c:354 register_command_handler(): registering 'mdw'...
+Debug: 190 15 command.c:354 register_command_handler(): registering 'mdh'...
+Debug: 191 15 command.c:354 register_command_handler(): registering 'mdb'...
+Debug: 192 15 command.c:354 register_command_handler(): registering 'mwd'...
+Debug: 193 16 command.c:354 register_command_handler(): registering 'mww'...
+Debug: 194 16 command.c:354 register_command_handler(): registering 'mwh'...
+Debug: 195 16 command.c:354 register_command_handler(): registering 'mwb'...
+Debug: 196 16 command.c:354 register_command_handler(): registering 'bp'...
+Debug: 197 16 command.c:354 register_command_handler(): registering 'rbp'...
+Debug: 198 16 command.c:354 register_command_handler(): registering 'wp'...
+Debug: 199 16 command.c:354 register_command_handler(): registering 'rwp'...
+Debug: 200 16 command.c:354 register_command_handler(): registering 'load_image'...
+Debug: 201 16 command.c:354 register_command_handler(): registering 'dump_image'...
+Debug: 202 16 command.c:354 register_command_handler(): registering 'verify_image_checksum'...
+Debug: 203 16 command.c:354 register_command_handler(): registering 'verify_image'...
+Debug: 204 16 command.c:354 register_command_handler(): registering 'test_image'...
+Debug: 205 16 command.c:354 register_command_handler(): registering 'reset_nag'...
+Debug: 206 16 command.c:354 register_command_handler(): registering 'ps'...
+Debug: 207 16 command.c:354 register_command_handler(): registering 'test_mem_access'...
+Info : 208 16 bcm2835gpio.c:450 bcm2835gpio_init(): BCM2835 GPIO JTAG/SWD bitbang driver
+Info : 209 16 bcm2835gpio.c:458 bcm2835gpio_init(): SWD only mode enabled (specify tck, tms, tdi and tdo gpios to add JTAG mode)
+Debug: 210 16 bcm2835gpio.c:525 bcm2835gpio_init(): saved pinmux settings: tck 0 tms 0 tdi 0 tdo 0 trst 0 srst 1
+Debug: 211 16 bitbang.c:466 bitbang_switch_to_swd(): bitbang_switch_to_swd
+****host   offset 0 bits 136: ff ff ff ff ff ff ff 9e e7 ff ff ff ff ff ff ff 00
+Debug: 212 17 core.c:1670 adapter_khz_to_speed(): convert khz to interface specific speed value
+Debug: 213 17 core.c:1674 adapter_khz_to_speed(): have interface set up
+Debug: 214 17 core.c:1670 adapter_khz_to_speed(): convert khz to interface specific speed value
+Debug: 215 17 core.c:1674 adapter_khz_to_speed(): have interface set up
+Info : 216 17 core.c:1452 adapter_init(): clock speed 1000 kHz
+Debug: 217 17 openocd.c:141 handle_init_command(): Debug Adapter init complete
+Debug: 218 17 command.c:143 script_debug(): command - transport transport init
+Debug: 220 17 transport.c:239 handle_transport_init(): handle_transport_init
+Debug: 221 17 command.c:143 script_debug(): command - dap dap init
+Debug: 223 17 arm_dap.c:106 dap_init_all(): Initializing all DAPs ...
+Debug: 224 17 bitbang.c:441 bitbang_swd_switch_seq(): bitbang_swd_switch_seq
+Debug: 225 17 bitbang.c:449 bitbang_swd_switch_seq(): JTAG-to-SWD
+****host   offset 0 bits 136: ff ff ff ff ff ff ff 9e e7 ff ff ff ff ff ff ff 00
+Debug: 226 18 bitbang.c:478 bitbang_swd_read_reg(): bitbang_swd_read_reg
+****host   offset 0 bits  8: a5
+****target offset 0 bits 38:
+Debug: 227 18 bitbang.c:505 bitbang_swd_read_reg(): OK DP read reg 0 = 2ba01477
+Debug: 228 18 bitbang.c:537 bitbang_swd_write_reg(): bitbang_swd_write_reg
+****host   offset 0 bits  8: 81
+****target offset 0 bits  5:
+****host   offset 5 bits 33: d3 03 00 00 80
+Debug: 229 18 bitbang.c:564 bitbang_swd_write_reg(): OK DP write reg 0 = 0000001e
+Debug: 230 18 bitbang.c:589 bitbang_swd_run_queue(): bitbang_swd_run_queue
+****target offset 0 bits  8:
+Debug: 231 18 bitbang.c:596 bitbang_swd_run_queue(): SWD queue return value: 00
+Info : 232 18 adi_v5_swd.c:136 swd_connect(): SWD DPIDR 0x2ba01477
+Debug: 233 18 arm_adi_v5.c:653 dap_dp_init(): nrf52.dap
+Debug: 234 18 bitbang.c:537 bitbang_swd_write_reg(): bitbang_swd_write_reg
+****host   offset 0 bits  8: b1
+****target offset 0 bits  5:
+****host   offset 5 bits 33: 13 00 00 00 80
+Debug: 235 19 bitbang.c:564 bitbang_swd_write_reg(): OK DP write reg 8 = 00000000
+Debug: 236 19 bitbang.c:478 bitbang_swd_read_reg(): bitbang_swd_read_reg
+****host   offset 0 bits  8: 8d
+****target offset 0 bits 38:
+Debug: 237 19 bitbang.c:505 bitbang_swd_read_reg(): OK DP read reg 4 = f0000041
+Debug: 238 19 bitbang.c:589 bitbang_swd_run_queue(): bitbang_swd_run_queue
+****target offset 0 bits  8:
+Debug: 239 19 bitbang.c:596 bitbang_swd_run_queue(): SWD queue return value: 00
+Debug: 240 19 bitbang.c:537 bitbang_swd_write_reg(): bitbang_swd_write_reg
+****host   offset 0 bits  8: a9
+****target offset 0 bits  5:
+****host   offset 5 bits 33: 13 04 00 00 aa
+Debug: 241 19 bitbang.c:564 bitbang_swd_write_reg(): OK DP write reg 4 = 50000020
+Debug: 242 19 bitbang.c:478 bitbang_swd_read_reg(): bitbang_swd_read_reg
+****host   offset 0 bits  8: 8d
+****target offset 0 bits 38:
+Debug: 243 19 bitbang.c:505 bitbang_swd_read_reg(): OK DP read reg 4 = f0000040
+Debug: 244 19 bitbang.c:537 bitbang_swd_write_reg(): bitbang_swd_write_reg
+****host   offset 0 bits  8: a9
+****target offset 0 bits  5:
+****host   offset 5 bits 33: 13 00 00 00 8a
+Debug: 245 20 bitbang.c:564 bitbang_swd_write_reg(): OK DP write reg 4 = 50000000
+Debug: 246 20 arm_adi_v5.c:698 dap_dp_init(): DAP: wait CDBGPWRUPACK
+Debug: 247 20 arm_adi_v5.h:501 dap_dp_poll_register(): DAP: poll 4, mask 0x20000000, value 0x20000000
+Debug: 248 20 bitbang.c:478 bitbang_swd_read_reg(): bitbang_swd_read_reg
+****host   offset 0 bits  8: 8d
+****target offset 0 bits 38:
+Debug: 249 20 bitbang.c:505 bitbang_swd_read_reg(): OK DP read reg 4 = f0000040
+Debug: 250 20 bitbang.c:589 bitbang_swd_run_queue(): bitbang_swd_run_queue
+****target offset 0 bits  8:
+Debug: 251 20 bitbang.c:596 bitbang_swd_run_queue(): SWD queue return value: 00
+Debug: 252 20 arm_adi_v5.c:706 dap_dp_init(): DAP: wait CSYSPWRUPACK
+Debug: 253 20 arm_adi_v5.h:501 dap_dp_poll_register(): DAP: poll 4, mask 0x80000000, value 0x80000000
+Debug: 254 20 bitbang.c:478 bitbang_swd_read_reg(): bitbang_swd_read_reg
+****host   offset 0 bits  8: 8d
+****target offset 0 bits 38:
+Debug: 255 20 bitbang.c:505 bitbang_swd_read_reg(): OK DP read reg 4 = f0000040
+Debug: 256 21 bitbang.c:589 bitbang_swd_run_queue(): bitbang_swd_run_queue
+****target offset 0 bits  8:
+Debug: 257 21 bitbang.c:596 bitbang_swd_run_queue(): SWD queue return value: 00
+Debug: 258 21 bitbang.c:478 bitbang_swd_read_reg(): bitbang_swd_read_reg
+****host   offset 0 bits  8: 8d
+****target offset 0 bits 38:
+Debug: 259 21 bitbang.c:505 bitbang_swd_read_reg(): OK DP read reg 4 = f0000040
+Debug: 260 21 bitbang.c:537 bitbang_swd_write_reg(): bitbang_swd_write_reg
+****host   offset 0 bits  8: a9
+****target offset 0 bits  5:
+****host   offset 5 bits 33: 33 00 00 00 aa
+Debug: 261 21 bitbang.c:564 bitbang_swd_write_reg(): OK DP write reg 4 = 50000001
+Debug: 262 21 bitbang.c:478 bitbang_swd_read_reg(): bitbang_swd_read_reg
+****host   offset 0 bits  8: 8d
+****target offset 0 bits 38:
+Debug: 263 21 bitbang.c:505 bitbang_swd_read_reg(): OK DP read reg 4 = f0000041
+Debug: 264 21 bitbang.c:589 bitbang_swd_run_queue(): bitbang_swd_run_queue
+****target offset 0 bits  8:
+Debug: 265 21 bitbang.c:596 bitbang_swd_run_queue(): SWD queue return value: 00
+Debug: 266 21 openocd.c:158 handle_init_command(): Examining targets...
+Debug: 267 21 target.c:1611 target_call_event_callbacks(): target event 17 (examine-start) for core nrf52.cpu
+Debug: 268 21 bitbang.c:537 bitbang_swd_write_reg(): bitbang_swd_write_reg
+****host   offset 0 bits  8: b1
+****target offset 0 bits  5:
+****host   offset 5 bits 33: 13 1e 00 00 40
+Debug: 269 22 bitbang.c:564 bitbang_swd_write_reg(): OK DP write reg 8 = 000000f0
+Debug: 270 22 bitbang.c:478 bitbang_swd_read_reg(): bitbang_swd_read_reg
+****host   offset 0 bits  8: 9f
+****target offset 0 bits 38:
+Debug: 271 22 bitbang.c:505 bitbang_swd_read_reg(): OK AP read reg C = 00050000
+****target offset 0 bits 255:
+Debug: 272 22 bitbang.c:478 bitbang_swd_read_reg(): bitbang_swd_read_reg
+****host   offset 0 bits  8: bd
+****target offset 0 bits 38:
+Debug: 273 23 bitbang.c:505 bitbang_swd_read_reg(): OK DP read reg C = 24770011
+Debug: 274 23 bitbang.c:589 bitbang_swd_run_queue(): bitbang_swd_run_queue
+****target offset 0 bits  8:
+Debug: 275 23 bitbang.c:596 bitbang_swd_run_queue(): SWD queue return value: 00
+Debug: 276 23 arm_adi_v5.c:888 dap_find_ap(): Found AHB3-AP at AP index: 0 (IDR=0x24770011)
+Debug: 277 23 bitbang.c:537 bitbang_swd_write_reg(): bitbang_swd_write_reg
+****host   offset 0 bits  8: b1
+****target offset 0 bits  5:
+****host   offset 5 bits 33: 13 00 00 00 00
+Debug: 278 23 bitbang.c:564 bitbang_swd_write_reg(): OK DP write reg 8 = 00000000
+Debug: 279 23 bitbang.c:537 bitbang_swd_write_reg(): bitbang_swd_write_reg
+****host   offset 0 bits  8: a3
+****target offset 0 bits  5:
+****host   offset 5 bits 33: 13 04 00 40 14
+Debug: 280 23 bitbang.c:564 bitbang_swd_write_reg(): OK AP write reg 0 = a2000020
+****target offset 0 bits  8:
+Debug: 281 23 bitbang.c:537 bitbang_swd_write_reg(): bitbang_swd_write_reg
+****host   offset 0 bits  8: 8b
+****target offset 0 bits  5:
+****host   offset 5 bits 33: 13 00 00 00 00
+Debug: 282 24 bitbang.c:564 bitbang_swd_write_reg(): OK AP write reg 4 = 00000000
+****target offset 0 bits  8:
+Debug: 283 24 bitbang.c:478 bitbang_swd_read_reg(): bitbang_swd_read_reg
+****host   offset 0 bits  8: 87
+****target offset 0 bits 38:
+Debug: 284 24 bitbang.c:505 bitbang_swd_read_reg(): OK AP read reg 0 = 24770011
+****target offset 0 bits  8:
+Debug: 285 24 bitbang.c:478 bitbang_swd_read_reg(): bitbang_swd_read_reg
+****host   offset 0 bits  8: bd
+****target offset 0 bits 38:
+Debug: 286 24 bitbang.c:505 bitbang_swd_read_reg(): OK DP read reg C = 23000060
+Debug: 287 24 bitbang.c:537 bitbang_swd_write_reg(): bitbang_swd_write_reg
+****host   offset 0 bits  8: b1
+****target offset 0 bits  5:
+****host   offset 5 bits 33: 13 1e 00 00 40
+Debug: 288 25 bitbang.c:564 bitbang_swd_write_reg(): OK DP write reg 8 = 000000f0
+Debug: 289 25 bitbang.c:478 bitbang_swd_read_reg(): bitbang_swd_read_reg
+****host   offset 0 bits  8: af
+****target offset 0 bits 38:
+Debug: 290 25 bitbang.c:505 bitbang_swd_read_reg(): OK AP read reg 4 = 23000060
+****target offset 0 bits  8:
+Debug: 291 25 bitbang.c:478 bitbang_swd_read_reg(): bitbang_swd_read_reg
+****host   offset 0 bits  8: bd
+****target offset 0 bits 38:
+Debug: 292 25 bitbang.c:505 bitbang_swd_read_reg(): OK DP read reg C = 00000000
+Debug: 293 25 bitbang.c:589 bitbang_swd_run_queue(): bitbang_swd_run_queue
+****target offset 0 bits  8:
+Debug: 294 25 bitbang.c:596 bitbang_swd_run_queue(): SWD queue return value: 00
+Debug: 295 25 arm_adi_v5.c:777 mem_ap_init(): MEM_AP Packed Transfers: enabled
+Debug: 296 25 arm_adi_v5.c:788 mem_ap_init(): MEM_AP CFG: large data 0, long address 0, big-endian 0
+Debug: 297 25 bitbang.c:537 bitbang_swd_write_reg(): bitbang_swd_write_reg
+****host   offset 0 bits  8: b1
+****target offset 0 bits  5:
+****host   offset 5 bits 33: 13 00 00 00 00
+Debug: 298 26 bitbang.c:564 bitbang_swd_write_reg(): OK DP write reg 8 = 00000000
+Debug: 299 26 bitbang.c:537 bitbang_swd_write_reg(): bitbang_swd_write_reg
+****host   offset 0 bits  8: a3
+****target offset 0 bits  5:
+****host   offset 5 bits 33: 53 04 00 40 34
+Debug: 300 26 bitbang.c:564 bitbang_swd_write_reg(): OK AP write reg 0 = a2000022
+****target offset 0 bits  8:
+Debug: 301 26 bitbang.c:537 bitbang_swd_write_reg(): bitbang_swd_write_reg
+****host   offset 0 bits  8: 8b
+****target offset 0 bits  5:
+****host   offset 5 bits 33: 13 a0 1d 00 3c
+Debug: 302 26 bitbang.c:564 bitbang_swd_write_reg(): OK AP write reg 4 = e000ed00
+****target offset 0 bits  8:
+Debug: 303 26 bitbang.c:478 bitbang_swd_read_reg(): bitbang_swd_read_reg
+****host   offset 0 bits  8: 9f
+****target offset 0 bits 38:
+Debug: 304 26 bitbang.c:505 bitbang_swd_read_reg(): OK AP read reg C = 00000000
+****target offset 0 bits  8:
+Debug: 305 27 bitbang.c:478 bitbang_swd_read_reg(): bitbang_swd_read_reg
+****host   offset 0 bits  8: bd
+****target offset 0 bits 38:
+Debug: 306 27 bitbang.c:505 bitbang_swd_read_reg(): OK DP read reg C = 410fc241
+Debug: 307 27 bitbang.c:589 bitbang_swd_run_queue(): bitbang_swd_run_queue
+****target offset 0 bits  8:
+Debug: 308 27 bitbang.c:596 bitbang_swd_run_queue(): SWD queue return value: 00
+Debug: 309 27 target.c:2377 target_read_u32(): address: 0xe000ed00, value: 0x410fc241
+Debug: 310 27 cortex_m.c:2167 cortex_m_examine(): Cortex-M4 r0p1 processor detected
+Debug: 311 27 cortex_m.c:2178 cortex_m_examine(): cpuid: 0x410fc241
+Debug: 312 27 bitbang.c:537 bitbang_swd_write_reg(): bitbang_swd_write_reg
+****host   offset 0 bits  8: 8b
+****target offset 0 bits  5:
+****host   offset 5 bits 33: 13 e8 1d 00 3c
+Debug: 313 27 bitbang.c:564 bitbang_swd_write_reg(): OK AP write reg 4 = e000ef40
+****target offset 0 bits  8:
+Debug: 314 27 bitbang.c:478 bitbang_swd_read_reg(): bitbang_swd_read_reg
+****host   offset 0 bits  8: 9f
+****target offset 0 bits 38:
+Debug: 315 28 bitbang.c:505 bitbang_swd_read_reg(): OK AP read reg C = 410fc241
+****target offset 0 bits  8:
+Debug: 316 28 bitbang.c:478 bitbang_swd_read_reg(): bitbang_swd_read_reg
+****host   offset 0 bits  8: bd
+****target offset 0 bits 38:
+Debug: 317 28 bitbang.c:505 bitbang_swd_read_reg(): OK DP read reg C = 10110021
+Debug: 318 28 bitbang.c:589 bitbang_swd_run_queue(): bitbang_swd_run_queue
+****target offset 0 bits  8:
+Debug: 319 28 bitbang.c:596 bitbang_swd_run_queue(): SWD queue return value: 00
+Debug: 320 28 target.c:2377 target_read_u32(): address: 0xe000ef40, value: 0x10110021
+Debug: 321 28 bitbang.c:478 bitbang_swd_read_reg(): bitbang_swd_read_reg
+****host   offset 0 bits  8: 9f
+****target offset 0 bits 38:
+Debug: 322 28 bitbang.c:505 bitbang_swd_read_reg(): OK AP read reg C = 10110021
+****target offset 0 bits  8:
+Debug: 323 28 bitbang.c:478 bitbang_swd_read_reg(): bitbang_swd_read_reg
+****host   offset 0 bits  8: bd
+****target offset 0 bits 38:
+Debug: 324 28 bitbang.c:505 bitbang_swd_read_reg(): OK DP read reg C = 11000011
+Debug: 325 28 bitbang.c:589 bitbang_swd_run_queue(): bitbang_swd_run_queue
+****target offset 0 bits  8:
+Debug: 326 28 bitbang.c:596 bitbang_swd_run_queue(): SWD queue return value: 00
+Debug: 327 29 target.c:2377 target_read_u32(): address: 0xe000ef44, value: 0x11000011
+Debug: 328 29 cortex_m.c:2189 cortex_m_examine(): Cortex-M4 floating point feature FPv4_SP found
+Debug: 329 29 target.c:2465 target_write_u32(): address: 0xe000edfc, value: 0x01000000
+Debug: 330 29 bitbang.c:537 bitbang_swd_write_reg(): bitbang_swd_write_reg
+****host   offset 0 bits  8: 8b
+****target offset 0 bits  5:
+****host   offset 5 bits 33: 93 bf 1d 00 7c
+Debug: 331 29 bitbang.c:564 bitbang_swd_write_reg(): OK AP write reg 4 = e000edfc
+****target offset 0 bits  8:
+Debug: 332 29 bitbang.c:537 bitbang_swd_write_reg(): bitbang_swd_write_reg
+****host   offset 0 bits  8: bb
+****target offset 0 bits  5:
+****host   offset 5 bits 33: 13 00 00 20 20
+Debug: 333 29 bitbang.c:564 bitbang_swd_write_reg(): OK AP write reg C = 01000000
+****target offset 0 bits  8:
+Debug: 334 29 bitbang.c:589 bitbang_swd_run_queue(): bitbang_swd_run_queue
+****target offset 0 bits  8:
+Debug: 335 29 bitbang.c:596 bitbang_swd_run_queue(): SWD queue return value: 00
+Debug: 336 29 bitbang.c:537 bitbang_swd_write_reg(): bitbang_swd_write_reg
+****host   offset 0 bits  8: 8b
+****target offset 0 bits  5:
+****host   offset 5 bits 33: 13 00 04 00 1c
+Debug: 337 30 bitbang.c:564 bitbang_swd_write_reg(): OK AP write reg 4 = e0002000
+****target offset 0 bits  8:
+Debug: 338 30 bitbang.c:478 bitbang_swd_read_reg(): bitbang_swd_read_reg
+****host   offset 0 bits  8: 9f
+****target offset 0 bits 38:
+Debug: 339 30 bitbang.c:505 bitbang_swd_read_reg(): OK AP read reg C = 11000011
+****target offset 0 bits  8:
+Debug: 340 30 bitbang.c:478 bitbang_swd_read_reg(): bitbang_swd_read_reg
+****host   offset 0 bits  8: bd
+****target offset 0 bits 38:
+Debug: 341 30 bitbang.c:505 bitbang_swd_read_reg(): OK DP read reg C = 00000260
+Debug: 342 30 bitbang.c:589 bitbang_swd_run_queue(): bitbang_swd_run_queue
+****target offset 0 bits  8:
+Debug: 343 30 bitbang.c:596 bitbang_swd_run_queue(): SWD queue return value: 00
+Debug: 344 31 target.c:2377 target_read_u32(): address: 0xe0002000, value: 0x00000260
+Debug: 345 31 target.c:2465 target_write_u32(): address: 0xe0002008, value: 0x00000000
+Debug: 346 31 bitbang.c:537 bitbang_swd_write_reg(): bitbang_swd_write_reg
+****host   offset 0 bits  8: 8b
+****target offset 0 bits  5:
+****host   offset 5 bits 33: 13 01 04 00 7c
+Debug: 347 31 bitbang.c:564 bitbang_swd_write_reg(): OK AP write reg 4 = e0002008
+****target offset 0 bits  8:
+Debug: 348 31 bitbang.c:537 bitbang_swd_write_reg(): bitbang_swd_write_reg
+****host   offset 0 bits  8: bb
+****target offset 0 bits  5:
+****host   offset 5 bits 33: 13 00 00 00 00
+Debug: 349 31 bitbang.c:564 bitbang_swd_write_reg(): OK AP write reg C = 00000000
+****target offset 0 bits  8:
+Debug: 350 31 bitbang.c:589 bitbang_swd_run_queue(): bitbang_swd_run_queue
+****target offset 0 bits  8:
+Debug: 351 31 bitbang.c:596 bitbang_swd_run_queue(): SWD queue return value: 00
+Debug: 352 31 target.c:2465 target_write_u32(): address: 0xe000200c, value: 0x00000000
+Debug: 353 31 bitbang.c:537 bitbang_swd_write_reg(): bitbang_swd_write_reg
+****host   offset 0 bits  8: bb
+****target offset 0 bits  5:
+****host   offset 5 bits 33: 13 00 00 00 80
+Debug: 354 32 bitbang.c:564 bitbang_swd_write_reg(): OK AP write reg C = 00000000
+****target offset 0 bits  8:
+Debug: 355 32 bitbang.c:589 bitbang_swd_run_queue(): bitbang_swd_run_queue
+****target offset 0 bits  8:
+Debug: 356 32 bitbang.c:596 bitbang_swd_run_queue(): SWD queue return value: 00
+Debug: 357 32 target.c:2465 target_write_u32(): address: 0xe0002010, value: 0x00000000
+Debug: 358 32 bitbang.c:537 bitbang_swd_write_reg(): bitbang_swd_write_reg
+****host   offset 0 bits  8: bb
+****target offset 0 bits  5:
+****host   offset 5 bits 33: 13 00 00 00 80
+Debug: 359 32 bitbang.c:564 bitbang_swd_write_reg(): OK AP write reg C = 00000000
+****target offset 0 bits  8:
+Debug: 360 32 bitbang.c:589 bitbang_swd_run_queue(): bitbang_swd_run_queue
+****target offset 0 bits  8:
+Debug: 361 32 bitbang.c:596 bitbang_swd_run_queue(): SWD queue return value: 00
+Debug: 362 32 target.c:2465 target_write_u32(): address: 0xe0002014, value: 0x00000000
+Debug: 363 32 bitbang.c:537 bitbang_swd_write_reg(): bitbang_swd_write_reg
+****host   offset 0 bits  8: bb
+****target offset 0 bits  5:
+****host   offset 5 bits 33: 13 00 00 00 80
+Debug: 364 33 bitbang.c:564 bitbang_swd_write_reg(): OK AP write reg C = 00000000
+****target offset 0 bits  8:
+Debug: 365 33 bitbang.c:589 bitbang_swd_run_queue(): bitbang_swd_run_queue
+****target offset 0 bits  8:
+Debug: 366 33 bitbang.c:596 bitbang_swd_run_queue(): SWD queue return value: 00
+Debug: 367 33 target.c:2465 target_write_u32(): address: 0xe0002018, value: 0x00000000
+Debug: 368 33 bitbang.c:537 bitbang_swd_write_reg(): bitbang_swd_write_reg
+****host   offset 0 bits  8: bb
+****target offset 0 bits  5:
+****host   offset 5 bits 33: 13 00 00 00 80
+Debug: 369 33 bitbang.c:564 bitbang_swd_write_reg(): OK AP write reg C = 00000000
+****target offset 0 bits  8:
+Debug: 370 33 bitbang.c:589 bitbang_swd_run_queue(): bitbang_swd_run_queue
+****target offset 0 bits  8:
+Debug: 371 33 bitbang.c:596 bitbang_swd_run_queue(): SWD queue return value: 00
+Debug: 372 33 target.c:2465 target_write_u32(): address: 0xe000201c, value: 0x00000000
+Debug: 373 33 bitbang.c:537 bitbang_swd_write_reg(): bitbang_swd_write_reg
+****host   offset 0 bits  8: bb
+****target offset 0 bits  5:
+****host   offset 5 bits 33: 13 00 00 00 80
+Debug: 374 34 bitbang.c:564 bitbang_swd_write_reg(): OK AP write reg C = 00000000
+****target offset 0 bits  8:
+Debug: 375 34 bitbang.c:589 bitbang_swd_run_queue(): bitbang_swd_run_queue
+****target offset 0 bits  8:
+Debug: 376 34 bitbang.c:596 bitbang_swd_run_queue(): SWD queue return value: 00
+Debug: 377 34 target.c:2465 target_write_u32(): address: 0xe0002020, value: 0x00000000
+Debug: 378 34 bitbang.c:537 bitbang_swd_write_reg(): bitbang_swd_write_reg
+****host   offset 0 bits  8: bb
+****target offset 0 bits  5:
+****host   offset 5 bits 33: 13 00 00 00 80
+Debug: 379 34 bitbang.c:564 bitbang_swd_write_reg(): OK AP write reg C = 00000000
+****target offset 0 bits  8:
+Debug: 380 34 bitbang.c:589 bitbang_swd_run_queue(): bitbang_swd_run_queue
+****target offset 0 bits  8:
+Debug: 381 34 bitbang.c:596 bitbang_swd_run_queue(): SWD queue return value: 00
+Debug: 382 34 target.c:2465 target_write_u32(): address: 0xe0002024, value: 0x00000000
+Debug: 383 34 bitbang.c:537 bitbang_swd_write_reg(): bitbang_swd_write_reg
+****host   offset 0 bits  8: bb
+****target offset 0 bits  5:
+****host   offset 5 bits 33: 13 00 00 00 80
+Debug: 384 35 bitbang.c:564 bitbang_swd_write_reg(): OK AP write reg C = 00000000
+****target offset 0 bits  8:
+Debug: 385 35 bitbang.c:589 bitbang_swd_run_queue(): bitbang_swd_run_queue
+****target offset 0 bits  8:
+Debug: 386 35 bitbang.c:596 bitbang_swd_run_queue(): SWD queue return value: 00
+Debug: 387 35 cortex_m.c:2270 cortex_m_examine(): FPB fpcr 0x260, numcode 6, numlit 2
+Debug: 388 35 bitbang.c:537 bitbang_swd_write_reg(): bitbang_swd_write_reg
+****host   offset 0 bits  8: 8b
+****target offset 0 bits  5:
+****host   offset 5 bits 33: 13 00 02 00 1c
+Debug: 389 35 bitbang.c:564 bitbang_swd_write_reg(): OK AP write reg 4 = e0001000
+****target offset 0 bits  8:
+Debug: 390 35 bitbang.c:478 bitbang_swd_read_reg(): bitbang_swd_read_reg
+****host   offset 0 bits  8: 9f
+****target offset 0 bits 38:
+Debug: 391 35 bitbang.c:505 bitbang_swd_read_reg(): OK AP read reg C = 00000260
+****target offset 0 bits  8:
+Debug: 392 36 bitbang.c:478 bitbang_swd_read_reg(): bitbang_swd_read_reg
+****host   offset 0 bits  8: bd
+****target offset 0 bits 38:
+Debug: 393 36 bitbang.c:505 bitbang_swd_read_reg(): OK DP read reg C = 40000000
+Debug: 394 36 bitbang.c:589 bitbang_swd_run_queue(): bitbang_swd_run_queue
+****target offset 0 bits  8:
+Debug: 395 36 bitbang.c:596 bitbang_swd_run_queue(): SWD queue return value: 00
+Debug: 396 36 target.c:2377 target_read_u32(): address: 0xe0001000, value: 0x40000000
+Debug: 397 36 cortex_m.c:2004 cortex_m_dwt_setup(): DWT_CTRL: 0x40000000
+Debug: 398 36 bitbang.c:537 bitbang_swd_write_reg(): bitbang_swd_write_reg
+****host   offset 0 bits  8: 8b
+****target offset 0 bits  5:
+****host   offset 5 bits 33: 93 f7 03 00 3c
+Debug: 399 36 bitbang.c:564 bitbang_swd_write_reg(): OK AP write reg 4 = e0001fbc
+****target offset 0 bits  8:
+Debug: 400 36 bitbang.c:478 bitbang_swd_read_reg(): bitbang_swd_read_reg
+****host   offset 0 bits  8: 9f
+****target offset 0 bits 38:
+Debug: 401 37 bitbang.c:505 bitbang_swd_read_reg(): OK AP read reg C = 40000000
+****target offset 0 bits  8:
+Debug: 402 37 bitbang.c:478 bitbang_swd_read_reg(): bitbang_swd_read_reg
+****host   offset 0 bits  8: bd
+****target offset 0 bits 38:
+Debug: 403 37 bitbang.c:505 bitbang_swd_read_reg(): OK DP read reg C = 00000000
+Debug: 404 37 bitbang.c:589 bitbang_swd_run_queue(): bitbang_swd_run_queue
+****target offset 0 bits  8:
+Debug: 405 37 bitbang.c:596 bitbang_swd_run_queue(): SWD queue return value: 00
+Debug: 406 37 target.c:2377 target_read_u32(): address: 0xe0001fbc, value: 0x00000000
+Debug: 407 37 cortex_m.c:2011 cortex_m_dwt_setup(): DWT_DEVARCH: 0x0
+Debug: 408 37 target.c:2465 target_write_u32(): address: 0xe0001028, value: 0x00000000
+Debug: 409 37 bitbang.c:537 bitbang_swd_write_reg(): bitbang_swd_write_reg
+****host   offset 0 bits  8: 8b
+****target offset 0 bits  5:
+****host   offset 5 bits 33: 13 05 02 00 5c
+Debug: 410 37 bitbang.c:564 bitbang_swd_write_reg(): OK AP write reg 4 = e0001028
+****target offset 0 bits  8:
+Debug: 411 37 bitbang.c:537 bitbang_swd_write_reg(): bitbang_swd_write_reg
+****host   offset 0 bits  8: bb
+****target offset 0 bits  5:
+****host   offset 5 bits 33: 13 00 00 00 00
+Debug: 412 38 bitbang.c:564 bitbang_swd_write_reg(): OK AP write reg C = 00000000
+****target offset 0 bits  8:
+Debug: 413 38 bitbang.c:589 bitbang_swd_run_queue(): bitbang_swd_run_queue
+****target offset 0 bits  8:
+Debug: 414 38 bitbang.c:596 bitbang_swd_run_queue(): SWD queue return value: 00
+Debug: 415 38 target.c:2465 target_write_u32(): address: 0xe0001038, value: 0x00000000
+Debug: 416 38 bitbang.c:537 bitbang_swd_write_reg(): bitbang_swd_write_reg
+****host   offset 0 bits  8: 8b
+****target offset 0 bits  5:
+****host   offset 5 bits 33: 13 07 02 00 7c
+Debug: 417 38 bitbang.c:564 bitbang_swd_write_reg(): OK AP write reg 4 = e0001038
+****target offset 0 bits  8:
+Debug: 418 38 bitbang.c:537 bitbang_swd_write_reg(): bitbang_swd_write_reg
+****host   offset 0 bits  8: bb
+****target offset 0 bits  5:
+****host   offset 5 bits 33: 13 00 00 00 00
+Debug: 419 39 bitbang.c:564 bitbang_swd_write_reg(): OK AP write reg C = 00000000
+****target offset 0 bits  8:
+Debug: 420 39 bitbang.c:589 bitbang_swd_run_queue(): bitbang_swd_run_queue
+****target offset 0 bits  8:
+Debug: 421 39 bitbang.c:596 bitbang_swd_run_queue(): SWD queue return value: 00
+Debug: 422 39 target.c:2465 target_write_u32(): address: 0xe0001048, value: 0x00000000
+Debug: 423 39 bitbang.c:537 bitbang_swd_write_reg(): bitbang_swd_write_reg
+****host   offset 0 bits  8: 8b
+****target offset 0 bits  5:
+****host   offset 5 bits 33: 13 09 02 00 5c
+Debug: 424 39 bitbang.c:564 bitbang_swd_write_reg(): OK AP write reg 4 = e0001048
+****target offset 0 bits  8:
+Debug: 425 39 bitbang.c:537 bitbang_swd_write_reg(): bitbang_swd_write_reg
+****host   offset 0 bits  8: bb
+****target offset 0 bits  5:
+****host   offset 5 bits 33: 13 00 00 00 00
+Debug: 426 39 bitbang.c:564 bitbang_swd_write_reg(): OK AP write reg C = 00000000
+****target offset 0 bits  8:
+Debug: 427 39 bitbang.c:589 bitbang_swd_run_queue(): bitbang_swd_run_queue
+****target offset 0 bits  8:
+Debug: 428 40 bitbang.c:596 bitbang_swd_run_queue(): SWD queue return value: 00
+Debug: 429 40 target.c:2465 target_write_u32(): address: 0xe0001058, value: 0x00000000
+Debug: 430 40 bitbang.c:537 bitbang_swd_write_reg(): bitbang_swd_write_reg
+****host   offset 0 bits  8: 8b
+****target offset 0 bits  5:
+****host   offset 5 bits 33: 13 0b 02 00 7c
+Debug: 431 40 bitbang.c:564 bitbang_swd_write_reg(): OK AP write reg 4 = e0001058
+****target offset 0 bits  8:
+Debug: 432 40 bitbang.c:537 bitbang_swd_write_reg(): bitbang_swd_write_reg
+****host   offset 0 bits  8: bb
+****target offset 0 bits  5:
+****host   offset 5 bits 33: 13 00 00 00 00
+Debug: 433 40 bitbang.c:564 bitbang_swd_write_reg(): OK AP write reg C = 00000000
+****target offset 0 bits  8:
+Debug: 434 40 bitbang.c:589 bitbang_swd_run_queue(): bitbang_swd_run_queue
+****target offset 0 bits  8:
+Debug: 435 40 bitbang.c:596 bitbang_swd_run_queue(): SWD queue return value: 00
+Debug: 436 40 cortex_m.c:2060 cortex_m_dwt_setup(): DWT dwtcr 0x40000000, comp 4, watch/trigger
+Info : 437 41 cortex_m.c:2280 cortex_m_examine(): nrf52.cpu: hardware has 6 breakpoints, 4 watchpoints
+Debug: 438 41 target.c:1611 target_call_event_callbacks(): target event 18 (examine-end) for core nrf52.cpu
+Debug: 439 41 command.c:143 script_debug(): command - flash flash init
+Debug: 440 41 bitbang.c:537 bitbang_swd_write_reg(): bitbang_swd_write_reg
+****host   offset 0 bits  8: 8b
+****target offset 0 bits  5:
+****host   offset 5 bits 33: 13 be 1d 00 3c
+Debug: 441 41 bitbang.c:564 bitbang_swd_write_reg(): OK AP write reg 4 = e000edf0
+****target offset 0 bits  8:
+Debug: 442 41 bitbang.c:537 bitbang_swd_write_reg(): bitbang_swd_write_reg
+****host   offset 0 bits  8: b1
+****target offset 0 bits  5:
+****host   offset 5 bits 33: 13 02 00 00 20
+Debug: 443 41 bitbang.c:564 bitbang_swd_write_reg(): OK DP write reg 8 = 00000010
+Debug: 444 41 bitbang.c:478 bitbang_swd_read_reg(): bitbang_swd_read_reg
+****host   offset 0 bits  8: 87
+****target offset 0 bits 38:
+Debug: 445 41 bitbang.c:505 bitbang_swd_read_reg(): OK AP read reg 0 = 00000000
+****target offset 0 bits  8:
+Debug: 446 42 bitbang.c:478 bitbang_swd_read_reg(): bitbang_swd_read_reg
+****host   offset 0 bits  8: bd
+****target offset 0 bits 38:
+Debug: 447 42 bitbang.c:505 bitbang_swd_read_reg(): OK DP read reg C = 01050000
+Debug: 448 42 bitbang.c:589 bitbang_swd_run_queue(): bitbang_swd_run_queue
+****target offset 0 bits  8:
+Debug: 449 42 bitbang.c:596 bitbang_swd_run_queue(): SWD queue return value: 00
+Debug: 451 42 tcl.c:1222 handle_flash_init_command(): Initializing flash devices...
+Debug: 452 42 command.c:354 register_command_handler(): registering 'flash'...
+Debug: 453 42 command.c:354 register_command_handler(): registering 'flash'...
+Debug: 454 42 command.c:354 register_command_handler(): registering 'flash'...
+Debug: 455 42 command.c:354 register_command_handler(): registering 'flash'...
+Debug: 456 42 command.c:354 register_command_handler(): registering 'flash'...
+Debug: 457 42 command.c:354 register_command_handler(): registering 'flash'...
+Debug: 458 42 command.c:354 register_command_handler(): registering 'flash'...
+Debug: 459 42 command.c:354 register_command_handler(): registering 'flash'...
+Debug: 460 42 command.c:354 register_command_handler(): registering 'flash'...
+Debug: 461 42 command.c:354 register_command_handler(): registering 'flash'...
+Debug: 462 42 command.c:354 register_command_handler(): registering 'flash'...
+Debug: 463 42 command.c:354 register_command_handler(): registering 'flash'...
+Debug: 464 42 command.c:354 register_command_handler(): registering 'flash'...
+Debug: 465 42 command.c:354 register_command_handler(): registering 'flash'...
+Debug: 466 42 command.c:143 script_debug(): command - nand nand init
+Debug: 467 42 bitbang.c:478 bitbang_swd_read_reg(): bitbang_swd_read_reg
+****host   offset 0 bits  8: 87
+****target offset 0 bits 38:
+Debug: 468 43 bitbang.c:505 bitbang_swd_read_reg(): OK AP read reg 0 = 01050000
+****target offset 0 bits  8:
+Debug: 469 43 bitbang.c:478 bitbang_swd_read_reg(): bitbang_swd_read_reg
+****host   offset 0 bits  8: bd
+****target offset 0 bits 38:
+Debug: 470 43 bitbang.c:505 bitbang_swd_read_reg(): OK DP read reg C = 01050000
+Debug: 471 43 bitbang.c:589 bitbang_swd_run_queue(): bitbang_swd_run_queue
+****target offset 0 bits  8:
+Debug: 472 43 bitbang.c:596 bitbang_swd_run_queue(): SWD queue return value: 00
+Debug: 474 43 tcl.c:498 handle_nand_init_command(): Initializing NAND devices...
+Debug: 475 43 command.c:143 script_debug(): command - pld pld init
+Debug: 476 43 bitbang.c:478 bitbang_swd_read_reg(): bitbang_swd_read_reg
+****host   offset 0 bits  8: 87
+****target offset 0 bits 38:
+Debug: 477 43 bitbang.c:505 bitbang_swd_read_reg(): OK AP read reg 0 = 01050000
+****target offset 0 bits  8:
+Debug: 478 43 bitbang.c:478 bitbang_swd_read_reg(): bitbang_swd_read_reg
+****host   offset 0 bits  8: bd
+****target offset 0 bits 38:
+Debug: 479 44 bitbang.c:505 bitbang_swd_read_reg(): OK DP read reg C = 00050000
+Debug: 480 44 bitbang.c:589 bitbang_swd_run_queue(): bitbang_swd_run_queue
+****target offset 0 bits  8:
+Debug: 481 44 bitbang.c:596 bitbang_swd_run_queue(): SWD queue return value: 00
+Debug: 483 44 pld.c:206 handle_pld_init_command(): Initializing PLDs...
+Debug: 484 44 gdb_server.c:3492 gdb_target_start(): starting gdb server for nrf52.cpu on 3333
+Info : 485 44 server.c:311 add_service(): Listening on port 3333 for gdb connections
+Debug: 486 44 command.c:143 script_debug(): command - echo echo Checking flash protection...
+Debug: 487 44 bitbang.c:478 bitbang_swd_read_reg(): bitbang_swd_read_reg
+****host   offset 0 bits  8: 87
+****target offset 0 bits 38:
+Debug: 488 44 bitbang.c:505 bitbang_swd_read_reg(): OK AP read reg 0 = 00050000
+****target offset 0 bits  8:
+Debug: 489 44 bitbang.c:478 bitbang_swd_read_reg(): bitbang_swd_read_reg
+****host   offset 0 bits  8: bd
+****target offset 0 bits 38:
+Debug: 490 44 bitbang.c:505 bitbang_swd_read_reg(): OK DP read reg C = 00050000
+Debug: 491 44 bitbang.c:589 bitbang_swd_run_queue(): bitbang_swd_run_queue
+****target offset 0 bits  8:
+Debug: 492 44 bitbang.c:596 bitbang_swd_run_queue(): SWD queue return value: 00
+User : 494 45 command.c:769 jim_echo(): Checking flash protection...
+Debug: 495 45 command.c:143 script_debug(): command - nrf52.dap nrf52.dap apreg 1 0x0c
+Debug: 496 45 bitbang.c:478 bitbang_swd_read_reg(): bitbang_swd_read_reg
+****host   offset 0 bits  8: 87
+****target offset 0 bits 38:
+Debug: 497 45 bitbang.c:505 bitbang_swd_read_reg(): OK AP read reg 0 = 00050000
+****target offset 0 bits  8:
+Debug: 498 45 bitbang.c:478 bitbang_swd_read_reg(): bitbang_swd_read_reg
+****host   offset 0 bits  8: bd
+****target offset 0 bits 38:
+Debug: 499 45 bitbang.c:505 bitbang_swd_read_reg(): OK DP read reg C = 00050000
+Debug: 500 45 bitbang.c:589 bitbang_swd_run_queue(): bitbang_swd_run_queue
+****target offset 0 bits  8:
+Debug: 501 45 bitbang.c:596 bitbang_swd_run_queue(): SWD queue return value: 00
+Debug: 503 45 bitbang.c:537 bitbang_swd_write_reg(): bitbang_swd_write_reg
+****host   offset 0 bits  8: b1
+****target offset 0 bits  5:
+****host   offset 5 bits 33: 13 00 00 20 20
+Debug: 504 45 bitbang.c:564 bitbang_swd_write_reg(): OK DP write reg 8 = 01000000
+Debug: 505 45 bitbang.c:478 bitbang_swd_read_reg(): bitbang_swd_read_reg
+****host   offset 0 bits  8: 9f
+****target offset 0 bits 38:
+Debug: 506 46 bitbang.c:505 bitbang_swd_read_reg(): OK AP read reg C = 00050000
+****target offset 0 bits 255:
+Debug: 507 46 bitbang.c:478 bitbang_swd_read_reg(): bitbang_swd_read_reg
+****host   offset 0 bits  8: bd
+****target offset 0 bits 38:
+Debug: 508 46 bitbang.c:505 bitbang_swd_read_reg(): OK DP read reg C = 00000001
+Debug: 509 46 bitbang.c:589 bitbang_swd_run_queue(): bitbang_swd_run_queue
+****target offset 0 bits  8:
+Debug: 510 46 bitbang.c:596 bitbang_swd_run_queue(): SWD queue return value: 00
+Debug: 511 46 command.c:143 script_debug(): command - echo echo Flash protection is 0x00000001
+
+Debug: 512 46 bitbang.c:537 bitbang_swd_write_reg(): bitbang_swd_write_reg
+****host   offset 0 bits  8: b1
+****target offset 0 bits  5:
+****host   offset 5 bits 33: 13 02 00 00 20
+Debug: 513 47 bitbang.c:564 bitbang_swd_write_reg(): OK DP write reg 8 = 00000010
+Debug: 514 47 bitbang.c:478 bitbang_swd_read_reg(): bitbang_swd_read_reg
+****host   offset 0 bits  8: 87
+****target offset 0 bits 38:
+Debug: 515 47 bitbang.c:505 bitbang_swd_read_reg(): OK AP read reg 0 = 00000001
+****target offset 0 bits  8:
+Debug: 516 47 bitbang.c:478 bitbang_swd_read_reg(): bitbang_swd_read_reg
+****host   offset 0 bits  8: bd
+****target offset 0 bits 38:
+Debug: 517 47 bitbang.c:505 bitbang_swd_read_reg(): OK DP read reg C = 00050000
+Debug: 518 47 bitbang.c:589 bitbang_swd_run_queue(): bitbang_swd_run_queue
+****target offset 0 bits  8:
+Debug: 519 47 bitbang.c:596 bitbang_swd_run_queue(): SWD queue return value: 00
+User : 521 47 command.c:769 jim_echo(): Flash protection is 0x00000001
+
+Debug: 522 47 command.c:143 script_debug(): command - echo echo Flash is already unprotected
+Debug: 523 47 bitbang.c:478 bitbang_swd_read_reg(): bitbang_swd_read_reg
+****host   offset 0 bits  8: 87
+****target offset 0 bits 38:
+Debug: 524 48 bitbang.c:505 bitbang_swd_read_reg(): OK AP read reg 0 = 00050000
+****target offset 0 bits  8:
+Debug: 525 48 bitbang.c:478 bitbang_swd_read_reg(): bitbang_swd_read_reg
+****host   offset 0 bits  8: bd
+****target offset 0 bits 38:
+Debug: 526 48 bitbang.c:505 bitbang_swd_read_reg(): OK DP read reg C = 00050000
+Debug: 527 48 bitbang.c:589 bitbang_swd_run_queue(): bitbang_swd_run_queue
+****target offset 0 bits  8:
+Debug: 528 48 bitbang.c:596 bitbang_swd_run_queue(): SWD queue return value: 00
+User : 530 48 command.c:769 jim_echo(): Flash is already unprotected
+Debug: 531 48 command.c:143 script_debug(): command - exit exit 1
+Debug: 532 48 bitbang.c:478 bitbang_swd_read_reg(): bitbang_swd_read_reg
+****host   offset 0 bits  8: 87
+****target offset 0 bits 38:
+Debug: 533 48 bitbang.c:505 bitbang_swd_read_reg(): OK AP read reg 0 = 00050000
+****target offset 0 bits  8:
+Debug: 534 48 bitbang.c:478 bitbang_swd_read_reg(): bitbang_swd_read_reg
+****host   offset 0 bits  8: bd
+****target offset 0 bits 38:
+Debug: 535 48 bitbang.c:505 bitbang_swd_read_reg(): OK DP read reg C = 00050000
+Debug: 536 48 bitbang.c:589 bitbang_swd_run_queue(): bitbang_swd_run_queue
+****target offset 0 bits  8:
+Debug: 537 49 bitbang.c:596 bitbang_swd_run_queue(): SWD queue return value: 00
+Debug: 539 49 target.c:1961 target_free_all_working_areas_restore(): freeing all working areas
+Debug: 540 49 bitbang.c:441 bitbang_swd_switch_seq(): bitbang_swd_switch_seq
+Debug: 541 49 bitbang.c:453 bitbang_swd_switch_seq(): SWD-to-JTAG
+****host   offset 0 bits 80: ff ff ff ff ff ff ff 3c e7 ff
+Debug: 542 49 bitbang.c:589 bitbang_swd_run_queue(): bitbang_swd_run_queue
+****target offset 0 bits  8:
+Debug: 543 49 bitbang.c:596 bitbang_swd_run_queue(): SWD queue return value: 00

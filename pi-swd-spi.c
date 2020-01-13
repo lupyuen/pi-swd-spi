@@ -36,21 +36,6 @@
 //  Note: We must flip all bytes from LSB to MSB because LSB is not supported on Broadcom SPI.
 
 /**
- * SWD Line reset.
- *
- * SWD Line reset is at least 50 SWCLK cycles with SWDIO driven high,
- * followed by at least two idle (low) cycle.
- * Bits are stored (and transmitted) LSB-first.
- */
-static const uint8_t swd_seq_line_reset[] = {
-	/* At least 50 SWCLK cycles with SWDIO high */
-	0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-	/* At least 2 idle (low) cycles */
-	0x00,
-};
-static const unsigned swd_seq_line_reset_len = 64;
-
-/**
  * JTAG-to-SWD sequence.
  *
  * The JTAG-to-SWD sequence is at least 50 TCK/SWCLK cycles with TMS/SWDIO
@@ -72,6 +57,10 @@ static const uint8_t swd_seq_jtag_to_swd[] = {
 static const unsigned swd_seq_jtag_to_swd_len = 136;
 
 //  End of https://github.com/ntfreak/openocd/blob/master/src/jtag/swd.h
+
+//  Read register 0 (IDCODE)
+static const uint8_t read_reg_0[] = { 0xa5 };
+static const unsigned read_reg_0_len = 1;
 
 static const char *device = "/dev/spidev1.1";
 static uint8_t mode = 0  //  Note: LSB mode is not supported on Broadcom. We must flip LSB to MSB ourselves.
@@ -266,4 +255,19 @@ static void pabort(const char *s) {
             }
         }
     }
+
+    //  Enable debug log in openocd/src/jtag/drivers/bitbang.c:
+
+    static void bitbang_exchange(bool rnw, uint8_t buf[], unsigned int offset, unsigned int bit_cnt)
+    {
+        { ////
+            printf("****%s offset %d bits %2d:", rnw ? "target" : "host  ", offset, bit_cnt);
+            if (!rnw && buf) {
+                for (unsigned int i = 0; i < (bit_cnt + 7) / 8; i++) {
+                    printf(" %02x", buf[i]);
+                }
+            }
+            printf("\n");
+        } ////
+        //// LOG_DEBUG("bitbang_swd_read_reg");
 #endif  // NOTUSED
