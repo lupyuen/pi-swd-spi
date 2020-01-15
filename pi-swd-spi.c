@@ -81,7 +81,12 @@ static const unsigned swd_read_idcode_prepadded_len = 64;  //  Number of bits
 static const uint8_t  swd_read_ctrlstat[]   = { 0x8d };
 static const unsigned swd_read_ctrlstat_len = 8;  //  Number of bits
 
-/// SWD Sequence to Write Register 0 (ABORT). Byte-aligned, next request will not get out of sync.
+/// SWD Sequence to Write Register 0 (ABORT). Clears all sticky flags: 
+/// STICKYORUN: overrun error flag,
+/// WDATAERR: write data error flag,
+/// STICKYERR: sticky error flag,
+/// STICKYCMP: sticky compare flag.
+/// Byte-aligned, next request will not get out of sync.
 static const uint8_t  swd_write_abort[]   = { 0x00, 0x81, 0xd3, 0x03, 0x00, 0x00, 0x00, 0x00 };  //  With null byte (8 cycles idle) before and after
 static const unsigned swd_write_abort_len = 64;  //  Number of bits
 
@@ -196,33 +201,37 @@ static void transmit_resync(int fd) {
     spi_transmit(fd, swd_seq_jtag_to_swd, swd_seq_jtag_to_swd_len / 8);
 
     //  Transmit command to read Register 0 (IDCODE).  This is mandatory after JTAG-to-SWD sequence, according to SWD protocol.  We prepad with 2 null bits so that the next command will be byte-aligned.
-    puts("\nTransmit prepadded command to read Register 0 (IDCODE)...");
+    puts("\nTransmit prepadded command to read IDCODE...");
     spi_transmit(fd, swd_read_idcode_prepadded, swd_read_idcode_prepadded_len / 8);
+
+    //  Transmit command to write Register 0 (ABORT) and clear all sticky flags.  Error flags must be cleared before sending next transaction to target.
+    puts("\nTransmit command to write ABORT...");
+    spi_transmit(fd, swd_write_abort, swd_write_abort_len / 8);
 }
 
 /// Read IDCODE register
 static void read_idcode(int fd) {
     //  Transmit command to read Register 0 (IDCODE).
-    puts("\nTransmit unpadded command to read Register 0 (IDCODE)...");
+    puts("\nTransmit unpadded command to read IDCODE...");
     spi_transmit(fd, swd_read_idcode, swd_read_idcode_len / 8);
 
     //  Read response (38 bits)
     const int buf_size = 5;
     uint8_t buf[buf_size];
-    puts("\nReceive value of Register 0 (IDCODE)...");
+    puts("\nReceive value of IDCODE...");
     spi_receive(fd, buf, buf_size);
 }
 
 /// Read CTRL/STAT register
 static void read_ctrlstat(int fd) {
     //  Transmit command to read Register 4 (CTRL/STAT).
-    puts("\nTransmit unpadded command to read Register 4 (CTRL/STAT)...");
+    puts("\nTransmit unpadded command to read CTRL/STAT...");
     spi_transmit(fd, swd_read_ctrlstat, swd_read_ctrlstat_len / 8);
 
     //  Read response (38 bits)
     const int buf_size = 5;
     uint8_t buf[buf_size];
-    puts("\nReceive value of Register 4 (CTRL/STAT)...");
+    puts("\nReceive value of CTRL/STAT...");
     spi_receive(fd, buf, buf_size);
 }
 
