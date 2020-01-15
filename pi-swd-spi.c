@@ -293,51 +293,103 @@ static void pabort(const char *s) {
 #ifdef NOTUSED
 Expected output:
 
-pi@raspberrypi:~/pi-swd-spi $ gcc -o pi-swd-spi pi-swd-spi.c
-pi@raspberrypi:~/pi-swd-spi $ ./pi-swd-spi 
 spi mode: 80
 bits per word: 8
 max speed: 1953000 Hz (1953 KHz)
 
 ---- Test #1
 
+
 Transmit JTAG-to-SWD sequence...
 spi_transmit: len=17
 FF FF FF FF FF FF FF 79 
 E7 FF FF FF FF FF FF FF 
 00 
 
-Transmit prepadded command to read Register 0 (IDCODE)...
-spi_transmit: len=6
-29 40 00 00 00 00 
+Transmit prepadded command to read IDCODE...
+spi_transmit: len=8
+00 29 40 00 00 00 00 00 
 
-Transmit unpadded command to read Register 0 (IDCODE)...
+Transmit command to write ABORT...
+spi_transmit: len=8
+00 81 CB C0 00 00 00 00 
+
+Transmit unpadded command to read IDCODE...
 spi_transmit: len=1
 A5 
 
-Receive value of Register 0 (IDCODE)...
+Receive value of IDCODE...
 spi_receive: len=5
 73 47 01 BA E2 
+
+Transmit JTAG-to-SWD sequence...
+spi_transmit: len=17
+FF FF FF FF FF FF FF 79 
+E7 FF FF FF FF FF FF FF 
+00 
+
+Transmit prepadded command to read IDCODE...
+spi_transmit: len=8
+00 29 40 00 00 00 00 00 
+
+Transmit command to write ABORT...
+spi_transmit: len=8
+00 81 CB C0 00 00 00 00 
+
+Transmit unpadded command to read CTRL/STAT...
+spi_transmit: len=1
+B1 
+
+Receive value of CTRL/STAT...
+spi_receive: len=5
+03 00 00 00 EF 
 
 ---- Test #2
 
+
 Transmit JTAG-to-SWD sequence...
 spi_transmit: len=17
 FF FF FF FF FF FF FF 79 
 E7 FF FF FF FF FF FF FF 
 00 
 
-Transmit prepadded command to read Register 0 (IDCODE)...
-spi_transmit: len=6
-29 40 00 00 00 00 
+Transmit prepadded command to read IDCODE...
+spi_transmit: len=8
+00 29 40 00 00 00 00 00 
 
-Transmit unpadded command to read Register 0 (IDCODE)...
+Transmit command to write ABORT...
+spi_transmit: len=8
+00 81 CB C0 00 00 00 00 
+
+Transmit unpadded command to read IDCODE...
 spi_transmit: len=1
 A5 
 
-Receive value of Register 0 (IDCODE)...
+Receive value of IDCODE...
 spi_receive: len=5
 73 47 01 BA E2 
+
+Transmit JTAG-to-SWD sequence...
+spi_transmit: len=17
+FF FF FF FF FF FF FF 79 
+E7 FF FF FF FF FF FF FF 
+00 
+
+Transmit prepadded command to read IDCODE...
+spi_transmit: len=8
+00 29 40 00 00 00 00 00 
+
+Transmit command to write ABORT...
+spi_transmit: len=8
+00 81 CB C0 00 00 00 00 
+
+Transmit unpadded command to read CTRL/STAT...
+spi_transmit: len=1
+B1 
+
+Receive value of CTRL/STAT...
+spi_receive: len=5
+03 00 00 00 EF 
 
     static void transfer(int fd) {
         int ret;
