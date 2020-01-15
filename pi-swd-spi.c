@@ -215,8 +215,8 @@ static void read_idcode(int fd) {
 
 /// Read CTRL/STAT register
 static void read_ctrlstat(int fd) {
-    //  Transmit command to read Register 0 (IDCODE).
-    puts("\nTransmit unpadded command to read Register 0 (IDCODE)...");
+    //  Transmit command to read Register 4 (CTRL/STAT).
+    puts("\nTransmit unpadded command to read Register 4 (CTRL/STAT)...");
     spi_transmit(fd, swd_read_ctrlstat, swd_read_ctrlstat_len / 8);
 
     //  Read response (38 bits)
