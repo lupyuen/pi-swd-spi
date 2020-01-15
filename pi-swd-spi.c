@@ -21,7 +21,7 @@
 //  Pi SPI Kernel Driver: https://github.com/raspberrypi/linux/blob/rpi-3.12.y/drivers/spi/spi-bcm2708.c
 //  BCM2835 Peripherals Datasheet: https://www.raspberrypi.org/documentation/hardware/raspberrypi/bcm2835/BCM2835-ARM-Peripherals.pdf
 //  SWD mapped to SPI bytes: https://docs.google.com/spreadsheets/d/12oXe1MTTEZVIbdmFXsOgOXVFHCQnYVvIw6fRpIQZybg/edit#gid=0
-//  Compile with: gcc -o pi-swd-spi pi-swd-spi.c
+//  Compile with: clear ; cd ~/pi-swd-spi ; git pull ; gcc -o pi-swd-spi pi-swd-spi.c
 
 //  To test:
 //  Connect SWDIO to MOSI (Pin P1-19, Yellow)
@@ -231,12 +231,12 @@ static void spi_transfer(int fd) {
     for (int i = 0; i <= 1; i++) {  //  Test twice
         printf("\n---- Test #%d\n\n", i + 1);
         //  Must resync because previous request is not byte-aligned.
-        transmit_resync(id);
-        read_idcode(id);
+        transmit_resync(fd);
+        read_idcode(fd);
 
         //  Must resync because previous request is not byte-aligned.
-        transmit_resync(id);
-        read_ctrlstat(id);
+        transmit_resync(fd);
+        read_ctrlstat(fd);
     }
 }
 
