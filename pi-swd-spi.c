@@ -67,13 +67,23 @@ static const unsigned swd_seq_jtag_to_swd_len = 136;  //  Number of bits
 
 //  End of https://github.com/ntfreak/openocd/blob/master/src/jtag/swd.h
 
-//  SWD Sequence to Read Register 0 (IDCODE), with 2 trailing undefined bits short of 6 bytes. Target goes out of sync after sequence.
-static const uint8_t swd_read_reg_0[] = { 0xa5 };
-static const unsigned swd_read_reg_0_len = 8;  //  Number of bits
+/// SWD Sequence to Read Register 0 (IDCODE), with 2 trailing undefined bits short of 6 bytes. NOT byte-aligned, next request will get out of sync.
+/// A transaction must be followed by another transaction or at least 8 idle cycles to ensure that data is clocked through the AP.
+/// After clocking out the data parity bit, continue to clock the SW-DP serial interface until it has clocked out at least 8 more clock rising edges, before stopping the clock.
+static const uint8_t  swd_read_idcode[]   = { 0xa5 };
+static const unsigned swd_read_idcode_len = 8;  //  Number of bits
 
-//  SWD Sequence to Read Register 0 (IDCODE), prepadded with 2 null bits bits to fill up 6 bytes. Target will not get out of sync after sequence.
-static const uint8_t swd_read_reg_0_prepadded[] = { 0x94, 0x02, 0x00, 0x00, 0x00, 0x00 };
-static const unsigned swd_read_reg_0_prepadded_len = 48;  //  Number of bits
+/// SWD Sequence to Read Register 0 (IDCODE), prepadded with 2 null bits bits to fill up 6 bytes. Byte-aligned, next request will not get out of sync.
+static const uint8_t  swd_read_idcode_prepadded[]   = { 0x00, 0x94, 0x02, 0x00, 0x00, 0x00, 0x00, 0x00 };  //  With null byte (8 cycles idle) before and after
+static const unsigned swd_read_idcode_prepadded_len = 64;  //  Number of bits
+
+/// SWD Sequence to Read Register 4 (CTRL/STAT), with 2 trailing undefined bits short of 6 bytes. NOT byte-aligned, next request will get out of sync.
+static const uint8_t  swd_read_ctrlstat[]   = { 0x8d };
+static const unsigned swd_read_ctrlstat_len = 8;  //  Number of bits
+
+/// SWD Sequence to Write Register 0 (ABORT). Byte-aligned, next request will not get out of sync.
+static const uint8_t  swd_write_abort[]   = { 0x00, 0x81, 0xd3, 0x03, 0x00, 0x00, 0x00, 0x00 };  //  With null byte (8 cycles idle) before and after
+static const unsigned swd_write_abort_len = 64;  //  Number of bits
 
 //  SPI Configuration
 static const char *device = "/dev/spidev0.0";  //  SPI device name. If missing, enable SPI in raspi-config.
@@ -179,28 +189,54 @@ static void spi_receive(int fd, uint8_t *buf, unsigned int len) {
     }
 }
 
+/// Transmit preamble to resync target with host
+static void transmit_resync(int fd) {
+    //  Transmit JTAG-to-SWD sequence. Need to transmit every time because the SWD read/write command has extra 2 undefined bits that will confuse the target.
+    puts("Transmit JTAG-to-SWD sequence...");
+    spi_transmit(fd, swd_seq_jtag_to_swd, swd_seq_jtag_to_swd_len / 8);
+
+    //  Transmit command to read Register 0 (IDCODE).  This is mandatory after JTAG-to-SWD sequence, according to SWD protocol.  We prepad with 2 null bits so that the next command will be byte-aligned.
+    puts("\nTransmit prepadded command to read Register 0 (IDCODE)...");
+    spi_transmit(fd, swd_read_idcode_prepadded, swd_read_idcode_prepadded_len / 8);
+}
+
+/// Read IDCODE register
+static void read_idcode(int fd) {
+    //  Transmit command to read Register 0 (IDCODE).
+    puts("\nTransmit unpadded command to read Register 0 (IDCODE)...");
+    spi_transmit(fd, swd_read_idcode, swd_read_idcode_len / 8);
+
+    //  Read response (38 bits)
+    const int buf_size = 5;
+    uint8_t buf[buf_size];
+    puts("\nReceive value of Register 0 (IDCODE)...");
+    spi_receive(fd, buf, buf_size);
+}
+
+/// Read CTRL/STAT register
+static void read_ctrlstat(int fd) {
+    //  Transmit command to read Register 0 (IDCODE).
+    puts("\nTransmit unpadded command to read Register 0 (IDCODE)...");
+    spi_transmit(fd, swd_read_ctrlstat, swd_read_ctrlstat_len / 8);
+
+    //  Read response (38 bits)
+    const int buf_size = 5;
+    uint8_t buf[buf_size];
+    puts("\nReceive value of Register 4 (CTRL/STAT)...");
+    spi_receive(fd, buf, buf_size);
+}
+
 /// Transmit and receive data to/from SPI device
 static void spi_transfer(int fd) {
     for (int i = 0; i <= 1; i++) {  //  Test twice
         printf("\n---- Test #%d\n\n", i + 1);
+        //  Must resync because previous request is not byte-aligned.
+        transmit_resync(id);
+        read_idcode(id);
 
-        //  Transmit JTAG-to-SWD sequence. Need to transmit every time because the SWD read/write command has extra 2 undefined bits that will confuse the target.
-        puts("Transmit JTAG-to-SWD sequence...");
-        spi_transmit(fd, swd_seq_jtag_to_swd, swd_seq_jtag_to_swd_len / 8);
-
-        //  Transmit command to read Register 0 (IDCODE).  This is mandatory after JTAG-to-SWD sequence, according to SWD protocol.  We prepad with 2 null bits so that the next command will be byte-aligned.
-        puts("\nTransmit prepadded command to read Register 0 (IDCODE)...");
-        spi_transmit(fd, swd_read_reg_0_prepadded, swd_read_reg_0_prepadded_len / 8);
-
-        //  Transmit command to read Register 0 (IDCODE).
-        puts("\nTransmit unpadded command to read Register 0 (IDCODE)...");
-        spi_transmit(fd, swd_read_reg_0, swd_read_reg_0_len / 8);
-
-        //  Read response (38 bits)
-        const int buf_size = 5;
-        uint8_t buf[buf_size];
-        puts("\nReceive value of Register 0 (IDCODE)...");
-        spi_receive(fd, buf, buf_size);
+        //  Must resync because previous request is not byte-aligned.
+        transmit_resync(id);
+        read_ctrlstat(id);
     }
 }
 

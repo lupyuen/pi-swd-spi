@@ -5,6 +5,9 @@
 		},
 		{
 			"path": "/Users/Luppy/PineTime/openocd-spi"
+		},
+		{
+			"path": "C:/PineTime/openocd-spi"
 		}
 	],
 	"settings": {
