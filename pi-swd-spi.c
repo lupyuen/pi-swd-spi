@@ -21,7 +21,6 @@
 //  Pi SPI Kernel Driver: https://github.com/raspberrypi/linux/blob/rpi-3.12.y/drivers/spi/spi-bcm2708.c
 //  BCM2835 Peripherals Datasheet: https://www.raspberrypi.org/documentation/hardware/raspberrypi/bcm2835/BCM2835-ARM-Peripherals.pdf
 //  SWD mapped to SPI bytes: https://docs.google.com/spreadsheets/d/12oXe1MTTEZVIbdmFXsOgOXVFHCQnYVvIw6fRpIQZybg/edit#gid=0
-//  Compile with: clear ; cd ~/pi-swd-spi ; git pull ; gcc -o pi-swd-spi pi-swd-spi.c
 
 //  To test:
 //  Connect SWDIO to MOSI (Pin P1-19, Yellow)
@@ -30,6 +29,7 @@
 //  sudo raspi-config
 //  Interfacing Options --> SPI --> Yes
 //  Finish --> Yes
+//  Compile and run: clear ; cd ~/pi-swd-spi ; git pull ; gcc -o pi-swd-spi pi-swd-spi.c ; ./pi-swd-spi
 
 #include <stdint.h>
 #include <unistd.h>
@@ -192,7 +192,7 @@ static void spi_receive(int fd, uint8_t *buf, unsigned int len) {
 /// Transmit preamble to resync target with host
 static void transmit_resync(int fd) {
     //  Transmit JTAG-to-SWD sequence. Need to transmit every time because the SWD read/write command has extra 2 undefined bits that will confuse the target.
-    puts("Transmit JTAG-to-SWD sequence...");
+    puts("\nTransmit JTAG-to-SWD sequence...");
     spi_transmit(fd, swd_seq_jtag_to_swd, swd_seq_jtag_to_swd_len / 8);
 
     //  Transmit command to read Register 0 (IDCODE).  This is mandatory after JTAG-to-SWD sequence, according to SWD protocol.  We prepad with 2 null bits so that the next command will be byte-aligned.
