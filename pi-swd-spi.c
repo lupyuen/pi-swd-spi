@@ -96,9 +96,11 @@ static uint8_t mode = 0  //  Note: LSB mode is not supported on Broadcom. We mus
     | SPI_NO_CS  //  1 device per bus, no Chip Select
     | SPI_3WIRE  //  Bidirectional mode, data in and out pin shared
     ;            //  Data is valid on first rising edge of the clock, so CPOL=0 and CPHA=0
-static uint8_t bits = 8;         //  8 bits per word
-static uint32_t speed = 1953000;  //  1,953 kHz. Previously 500000
-static uint16_t delay = 0;       //  SPI driver latency: https://www.raspberrypi.org/forums/viewtopic.php?f=44&t=19489
+static uint8_t bits = 8;               //  8 bits per word
+static uint32_t speed = 31200 * 1000;  //  31,200 kHz (31.2 MHz) for SPI speed. Use fastest speed possible because we resend JTAG-to-SWD sequence after every read
+//  static uint32_t speed = 1953000;   //  Slower: 1,953 kHz (1.9 MHz)
+//  static uint32_t speed = 122000;    //  Slowest: 122 kHz
+static uint16_t delay = 0;             //  SPI driver latency: https://www.raspberrypi.org/forums/viewtopic.php?f=44&t=19489
 
 #define ARRAY_SIZE(a) (sizeof(a) / sizeof((a)[0]))
 
