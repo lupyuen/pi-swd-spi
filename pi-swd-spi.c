@@ -297,7 +297,7 @@ Expected output:
 
 spi mode: 80
 bits per word: 8
-max speed: 1953000 Hz (1953 KHz)
+max speed: 31200000 Hz (31200 KHz)
 
 ---- Test #1
 
@@ -322,7 +322,7 @@ A5
 
 Receive value of IDCODE...
 spi_receive: len=5
-73 47 01 BA E2 
+73 47 01 BA 02 
 
 Transmit JTAG-to-SWD sequence...
 spi_transmit: len=17
@@ -344,7 +344,7 @@ B1
 
 Receive value of CTRL/STAT...
 spi_receive: len=5
-03 00 00 00 EF 
+13 04 00 00 0F 
 
 ---- Test #2
 
@@ -369,7 +369,7 @@ A5
 
 Receive value of IDCODE...
 spi_receive: len=5
-73 47 01 BA E2 
+73 47 01 BA 02 
 
 Transmit JTAG-to-SWD sequence...
 spi_transmit: len=17
@@ -391,7 +391,7 @@ B1
 
 Receive value of CTRL/STAT...
 spi_receive: len=5
-03 00 00 00 EF 
+13 04 00 00 0F 
 
     static void transfer(int fd) {
         int ret;
